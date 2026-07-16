@@ -18,8 +18,8 @@ export default function HomePage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-black tracking-tight text-xl text-foreground">PULSE</span>
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/20">
+                <span className="font-black tracking-tight text-xl text-black dark:text-white">PULSE</span>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-cyan-950/40 text-black dark:text-cyan-400 border border-slate-300 dark:border-cyan-500/30">
                   v2.0 Enterprise
                 </span>
               </div>
@@ -30,17 +30,17 @@ export default function HomePage() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-xs font-black uppercase tracking-wider text-muted-foreground">
-            <Link href="#architecture" className="hover:text-foreground transition-colors">
+            <Link href="#architecture" className="hover:text-black dark:hover:text-white transition-colors">
               Enterprise Architecture
             </Link>
-            <Link href="/control-room/stadiums" className="hover:text-primary transition-colors flex items-center gap-1">
+            <Link href="/control-room/stadiums" className="hover:text-black dark:hover:text-cyan-400 transition-colors flex items-center gap-1">
               <span>3D Digital Twin</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping" />
             </Link>
-            <Link href="/control-room/broadcast" className="hover:text-foreground transition-colors">
+            <Link href="/control-room/broadcast" className="hover:text-black dark:hover:text-white transition-colors">
               Neural PA Engine
             </Link>
-            <Link href="/fan/match-hub" className="hover:text-foreground transition-colors">
+            <Link href="/fan/match-hub" className="hover:text-black dark:hover:text-white transition-colors">
               AR Match Hub
             </Link>
           </nav>
@@ -48,7 +48,7 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <Link
               href="/login"
-              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 transition-all shadow-sm"
+              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-black dark:text-white border border-slate-300 dark:border-slate-700 transition-all shadow-sm"
             >
               Sign In
             </Link>
@@ -65,12 +65,12 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 sm:pt-20 pb-16 text-center relative z-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/15 text-accent border border-accent/30 text-xs font-black uppercase tracking-widest mb-6 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-cyan-950/40 text-black dark:text-cyan-400 border border-slate-300 dark:border-cyan-500/30 text-xs font-black uppercase tracking-widest mb-6 shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-green-500 animate-ping" />
           Official GenAI & IoT Command Engine · FIFA World Cup 2026™
         </div>
 
-        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-[-0.04em] leading-[1.05] max-w-5xl mx-auto bg-gradient-to-r from-slate-900 via-purple-900 to-violet-600 dark:from-white dark:via-slate-100 dark:to-cyan-400 bg-clip-text text-transparent">
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-[-0.04em] leading-[1.05] max-w-5xl mx-auto text-black dark:bg-gradient-to-r dark:from-white dark:via-slate-100 dark:to-cyan-400 dark:bg-clip-text dark:text-transparent">
           Predictive Unified Live Stadium Experience
         </h1>
 
