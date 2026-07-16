@@ -13,7 +13,7 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-2xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary via-violet-600 to-accent flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-purple-700 via-violet-600 to-cyan-400 flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-105 transition-transform">
               P
             </div>
             <div>
@@ -48,13 +48,13 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <Link
               href="/login"
-              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-muted hover:bg-muted/80 text-foreground border border-border transition-all"
+              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 transition-all shadow-sm"
             >
               Sign In
             </Link>
             <Link
               href="/signup"
-              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-primary to-accent text-white hover:opacity-95 shadow-md transition-all hidden sm:inline-block"
+              className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-purple-700 to-cyan-500 dark:from-cyan-400 dark:to-purple-500 text-white dark:text-slate-950 hover:opacity-95 shadow-md transition-all hidden sm:inline-block"
             >
               Request Access
             </Link>
@@ -70,7 +70,7 @@ export default function HomePage() {
           Official GenAI & IoT Command Engine · FIFA World Cup 2026™
         </div>
 
-        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-[-0.04em] leading-[1.05] max-w-5xl mx-auto bg-gradient-to-r from-foreground via-foreground/90 to-primary bg-clip-text text-transparent">
+        <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-[-0.04em] leading-[1.05] max-w-5xl mx-auto bg-gradient-to-r from-slate-900 via-purple-900 to-violet-600 dark:from-white dark:via-slate-100 dark:to-cyan-400 bg-clip-text text-transparent">
           Predictive Unified Live Stadium Experience
         </h1>
 
@@ -143,14 +143,14 @@ export default function HomePage() {
             <div className="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href="/control-room"
-                className="flex-1 bg-gradient-to-r from-primary via-violet-600 to-primary text-white font-black py-3.5 px-6 rounded-2xl text-center text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2 group-hover:scale-102"
+                className="flex-1 bg-gradient-to-r from-purple-700 via-violet-600 to-purple-800 dark:from-cyan-400 dark:via-purple-500 dark:to-cyan-500 text-white dark:text-slate-950 font-black py-3.5 px-6 rounded-2xl text-center text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2 group-hover:scale-102"
               >
                 <span>Launch Operations Control Room</span>
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
               </Link>
               <Link
                 href="/login"
-                className="px-5 py-3.5 rounded-2xl bg-muted hover:bg-muted/80 text-foreground font-black text-xs uppercase tracking-wider text-center border border-border transition-all"
+                className="px-5 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-black text-xs uppercase tracking-wider text-center border border-slate-300 dark:border-slate-700 transition-all shadow-sm"
               >
                 Officer SSO
               </Link>
@@ -202,14 +202,14 @@ export default function HomePage() {
             <div className="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href="/fan"
-                className="flex-1 bg-gradient-to-r from-accent via-teal-600 to-accent text-white font-black py-3.5 px-6 rounded-2xl text-center text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2 group-hover:scale-102"
+                className="flex-1 bg-gradient-to-r from-cyan-600 via-teal-600 to-cyan-700 dark:from-cyan-400 dark:via-teal-400 dark:to-cyan-300 text-white dark:text-slate-950 font-black py-3.5 px-6 rounded-2xl text-center text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2 group-hover:scale-102"
               >
                 <span>Launch Universal Fan Application</span>
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
               </Link>
               <Link
                 href="/fan/match-hub"
-                className="px-5 py-3.5 rounded-2xl bg-muted hover:bg-muted/80 text-foreground font-black text-xs uppercase tracking-wider text-center border border-border transition-all"
+                className="px-5 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-black text-xs uppercase tracking-wider text-center border border-slate-300 dark:border-slate-700 transition-all shadow-sm"
               >
                 AR Audio Replay
               </Link>
