@@ -456,27 +456,27 @@ export function Stadium3DEngine({
   }, [yaw, pitch, zoom, viewLayer, isScanning, selectedSectorId, sectors, sponsorIndex, project]);
 
   return (
-    <div className="w-full flex flex-col bg-slate-950/90 rounded-3xl border border-slate-800 p-4 sm:p-6 shadow-2xl relative overflow-hidden select-none">
+    <div className="w-full flex flex-col bg-card dark:bg-slate-950/90 rounded-3xl border border-border dark:border-slate-800 p-4 sm:p-6 shadow-md dark:shadow-2xl relative overflow-hidden select-none transition-colors">
       {/* Top Controls Overlay */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800/80 z-20">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-border dark:border-slate-800/80 z-20">
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-xs font-black uppercase tracking-wider text-slate-200">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping" />
+          <span className="text-xs font-black uppercase tracking-wider text-foreground dark:text-slate-200">
             3D DIGITAL TWIN ENGINE · {stadiumName.split("—")[0]}
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-1.5 bg-muted dark:bg-slate-900 p-1 rounded-xl border border-border dark:border-slate-800">
           <button
             onClick={() => setZoom((z) => Math.min(1.6, z + 0.12))}
-            className="p-1.5 rounded-lg text-slate-300 hover:bg-slate-800 transition-all font-mono text-xs font-bold"
+            className="p-1.5 rounded-lg text-muted-foreground dark:text-slate-300 hover:bg-muted-foreground/20 dark:hover:bg-slate-800 transition-all font-mono text-xs font-bold"
             title="Zoom In"
           >
             ➕
           </button>
           <button
             onClick={() => setZoom((z) => Math.max(0.6, z - 0.12))}
-            className="p-1.5 rounded-lg text-slate-300 hover:bg-slate-800 transition-all font-mono text-xs font-bold"
+            className="p-1.5 rounded-lg text-muted-foreground dark:text-slate-300 hover:bg-muted-foreground/20 dark:hover:bg-slate-800 transition-all font-mono text-xs font-bold"
             title="Zoom Out"
           >
             ➖
@@ -487,7 +487,7 @@ export function Stadium3DEngine({
               setPitch(0.92);
               setZoom(1.05);
             }}
-            className="px-2.5 py-1 rounded-lg text-slate-300 hover:bg-slate-800 transition-all text-[11px] font-extrabold uppercase"
+            className="px-2.5 py-1 rounded-lg text-muted-foreground dark:text-slate-300 hover:bg-muted-foreground/20 dark:hover:bg-slate-800 transition-all text-[11px] font-extrabold uppercase"
             title="Reset Orbit Angle"
           >
             ↺ Reset Angle
@@ -496,7 +496,7 @@ export function Stadium3DEngine({
       </div>
 
       {/* 3D Canvas Stage */}
-      <div className="relative w-full aspect-[16/10] max-h-[580px] min-h-[380px] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden">
+      <div className="relative w-full aspect-[16/10] max-h-[580px] min-h-[380px] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden rounded-2xl border border-border/50 dark:border-slate-900 bg-[#070b12] shadow-inner my-2">
         <canvas
           ref={canvasRef}
           width={900}
@@ -512,35 +512,35 @@ export function Stadium3DEngine({
         />
 
         {/* Floating Help Badge */}
-        <div className="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-xl text-[10px] font-bold text-slate-400 pointer-events-none flex items-center gap-1.5">
+        <div className="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-xl text-[10px] font-bold text-slate-300 pointer-events-none flex items-center gap-1.5 shadow-lg">
           <span className="material-symbols-outlined text-[14px] text-cyan-400">360</span>
           <span>Drag mouse or swipe to rotate 360° · Scroll to zoom</span>
         </div>
 
         {/* Live Sponsor Ticker Pill */}
-        <div className="absolute top-3 right-3 bg-gradient-to-r from-cyan-950/80 to-slate-900/80 backdrop-blur-md border border-cyan-500/30 px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold text-cyan-300 pointer-events-none flex items-center gap-2">
+        <div className="absolute top-3 right-3 bg-gradient-to-r from-cyan-950/90 to-slate-900/90 backdrop-blur-md border border-cyan-500/40 px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold text-cyan-300 pointer-events-none flex items-center gap-2 shadow-lg">
           <span className="text-emerald-400">★ LED RIBBON:</span>
           <span>{SPONSORS[sponsorIndex]}</span>
         </div>
       </div>
 
       {/* Bottom Gate & Sector Telemetry Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-800/80 z-20">
-        <div className="bg-slate-900/70 p-2.5 rounded-xl border border-slate-800/80">
-          <span className="text-[9px] font-black uppercase text-slate-400 block">Active Turnstile Gates</span>
-          <span className="text-sm font-black text-white font-mono mt-0.5 block">12 / 12 GATES LIVE</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-border dark:border-slate-800/80 z-20">
+        <div className="bg-muted dark:bg-slate-900/70 p-2.5 rounded-xl border border-border dark:border-slate-800/80">
+          <span className="text-[9px] font-black uppercase text-muted-foreground dark:text-slate-400 block">Active Turnstile Gates</span>
+          <span className="text-sm font-black text-foreground dark:text-white font-mono mt-0.5 block">12 / 12 GATES LIVE</span>
         </div>
-        <div className="bg-slate-900/70 p-2.5 rounded-xl border border-slate-800/80">
-          <span className="text-[9px] font-black uppercase text-slate-400 block">Peak Inflow Node</span>
-          <span className="text-sm font-black text-cyan-400 font-mono mt-0.5 block">G04 (890/min)</span>
+        <div className="bg-muted dark:bg-slate-900/70 p-2.5 rounded-xl border border-border dark:border-slate-800/80">
+          <span className="text-[9px] font-black uppercase text-muted-foreground dark:text-slate-400 block">Peak Inflow Node</span>
+          <span className="text-sm font-black text-cyan-600 dark:text-cyan-400 font-mono mt-0.5 block">G04 (890/min)</span>
         </div>
-        <div className="bg-slate-900/70 p-2.5 rounded-xl border border-slate-800/80">
-          <span className="text-[9px] font-black uppercase text-slate-400 block">Concourse Heat Index</span>
-          <span className="text-sm font-black text-amber-400 font-mono mt-0.5 block">23.4°C · OPTIMAL</span>
+        <div className="bg-muted dark:bg-slate-900/70 p-2.5 rounded-xl border border-border dark:border-slate-800/80">
+          <span className="text-[9px] font-black uppercase text-muted-foreground dark:text-slate-400 block">Concourse Heat Index</span>
+          <span className="text-sm font-black text-amber-600 dark:text-amber-400 font-mono mt-0.5 block">23.4°C · OPTIMAL</span>
         </div>
-        <div className="bg-slate-900/70 p-2.5 rounded-xl border border-slate-800/80">
-          <span className="text-[9px] font-black uppercase text-slate-400 block">3D FPS & Latency</span>
-          <span className="text-sm font-black text-emerald-400 font-mono mt-0.5 block">60 FPS (4ms)</span>
+        <div className="bg-muted dark:bg-slate-900/70 p-2.5 rounded-xl border border-border dark:border-slate-800/80">
+          <span className="text-[9px] font-black uppercase text-muted-foreground dark:text-slate-400 block">3D FPS & Latency</span>
+          <span className="text-sm font-black text-emerald-600 dark:text-emerald-400 font-mono mt-0.5 block">60 FPS (4ms)</span>
         </div>
       </div>
     </div>
