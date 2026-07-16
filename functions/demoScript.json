@@ -1,0 +1,32 @@
+[
+  {
+    "atSecond": 15,
+    "action": "createIncident",
+    "type": "crowd",
+    "zoneId": "zone_c",
+    "severity": "critical",
+    "title": "Gate 3 Concourse Congestion Surge",
+    "description": "Turnstile entry rate at Gate 3 exceeded safe flow threshold (380+ fans/min). Bottleneck forming near Concourse C entrance.",
+    "location": "Concourse C / Gate 3"
+  },
+  {
+    "atSecond": 45,
+    "action": "createIncident",
+    "type": "medical",
+    "locationNodeId": "node_114",
+    "severity": "critical",
+    "title": "Medical Emergency near Section 114",
+    "description": "Fan reported heat exhaustion and dizziness near lower bowl Section 114 concession stand. First aid required immediately.",
+    "location": "Section 114 Concession Area"
+  },
+  {
+    "atSecond": 75,
+    "action": "createIncident",
+    "type": "security",
+    "zoneId": "zone_e",
+    "severity": "warning",
+    "title": "Unauthorized Access Alert at Fan Zone Portal",
+    "description": "Perimeter optical sensor detected unauthorized door breach near Gate 5 VIP corridor.",
+    "location": "Fan Zone Portal / Gate 5"
+  }
+]

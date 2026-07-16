@@ -1,26 +1,200 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap");
+
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --card-hover: #f1f5f9;
+  --border: #e2e8f0;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --primary: #7701d0;
+  --primary-foreground: #ffffff;
+  --accent: #00dbe7;
+  --accent-foreground: #0b0e14;
+  --ops-bg: #f8fafc;
+  --teal: #00f2ff;
+  --teal-dim: #00838f;
+  --amber: #ff9800;
+  --coral: #ff8a80;
+  --violet: #7701d0;
+  --shadow-color: rgba(119, 1, 208, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.85);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: #0b0e14;
+  --foreground: #e1e2eb;
+  --card: #161a23;
+  --card-foreground: #e1e2eb;
+  --card-hover: #1d222e;
+  --border: #2a353d;
+  --muted: #1d2026;
+  --muted-foreground: #849495;
+  --primary: #00f2ff;
+  --primary-foreground: #0b0e14;
+  --accent: #00dbe7;
+  --accent-foreground: #0b0e14;
+  --ops-bg: #0b0e14;
+  --teal: #00f2ff;
+  --teal-dim: #00dbe7;
+  --amber: #ffb86c;
+  --coral: #ff8a80;
+  --violet: #9d4edd;
+  --shadow-color: rgba(0, 242, 255, 0.1);
+  --glass-bg: rgba(22, 26, 35, 0.85);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Material Symbols ===== */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  user-select: none;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.fill-icon {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* ===== Scanline effect (ops mode) ===== */
+.scanline {
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 219, 231, 0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  animation: scan 8s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* ===== Pulse teal dot ===== */
+.pulse-teal {
+  animation: pulse-teal-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-teal-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.2); }
+}
+
+/* ===== Animated route path (fan map) ===== */
+.route-path {
+  stroke-dasharray: 8;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -200; }
+}
+
+/* ===== Typing cursor ===== */
+.typing-cursor::after {
+  content: '|';
+  animation: blink 0.8s infinite;
+  color: var(--teal-dim);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ===== Glassmorphic card ===== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.glass-card-light {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* ===== Fan app shadow ===== */
+.fan-shadow {
+  box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+/* ===== Custom scrollbar ===== */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: var(--muted); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ===== Ops grid layout ===== */
+.ops-grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  height: calc(100vh - 4rem);
+}
+
+/* ===== Glow animation ===== */
+.glow-pulse {
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.8; box-shadow: 0 0 10px rgba(0, 219, 231, 0.2); }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(0, 219, 231, 0.4); }
+}
+
+/* ===== Severity teal glow ===== */
+.teal-glow {
+  box-shadow: 0 0 12px rgba(0, 219, 231, 0.3);
+}
+
+/* ===== Incident severity borders ===== */
+.severity-critical { border-left: 4px solid #ffb4ab; }
+.severity-warning  { border-left: 4px solid #ffb86c; }
+.severity-info     { border-left: 4px solid #849495; }
+
+/* ===== Streaming text animation ===== */
+@keyframes fadeInChar {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.stream-char {
+  animation: fadeInChar 0.05s ease forwards;
+}
+
+/* ===== Skeleton shimmer ===== */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #1d2026 25%, #272a31 50%, #1d2026 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-light {
+  background: linear-gradient(90deg, #e1efff 25%, #d9eafc 50%, #e1efff 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
 }

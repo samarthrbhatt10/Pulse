@@ -1,0 +1,183 @@
+// PULSE — Complete Firestore Database Operations & Accessors per 06_DATA_MODEL_AND_APIS.md
+import { db } from "../firebase";
+import {
+  COLLECTIONS,
+  zoneConverter,
+  gateConverter,
+  venueNodeConverter,
+  venueEdgeConverter,
+  amenityConverter,
+  incidentConverter,
+  agentTraceConverter,
+  Gate,
+  VenueNode,
+  VenueEdge,
+  Amenity,
+  AgentTrace,
+} from "./schema";
+import { ZONES, INCIDENTS, Zone, Incident } from "../mockData";
+import { INITIAL_GATES, INITIAL_VENUE_NODES, INITIAL_VENUE_EDGES, INITIAL_AMENITIES, runFullDatabaseSeed } from "./seed";
+import { collection, getDocs, doc, setDoc, updateDoc, addDoc, query, orderBy, limit } from "firebase/firestore";
+
+/**
+ * Fetch all zones from Firestore (or mock fallback).
+ */
+export async function getZonesFromDb(): Promise<Zone[]> {
+  try {
+    const zonesRef = collection(db, COLLECTIONS.ZONES).withConverter(zoneConverter);
+    const snapshot = await getDocs(zonesRef);
+    if (snapshot.empty) return ZONES;
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getZonesFromDb fallback:", err);
+    return ZONES;
+  }
+}
+
+/**
+ * Fetch all gates from Firestore (or mock fallback).
+ */
+export async function getGatesFromDb(): Promise<Gate[]> {
+  try {
+    const gatesRef = collection(db, COLLECTIONS.GATES).withConverter(gateConverter);
+    const snapshot = await getDocs(gatesRef);
+    if (snapshot.empty) return INITIAL_GATES;
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getGatesFromDb fallback:", err);
+    return INITIAL_GATES;
+  }
+}
+
+/**
+ * Fetch all venue nodes from Firestore (or mock fallback).
+ */
+export async function getVenueNodesFromDb(): Promise<VenueNode[]> {
+  try {
+    const nodesRef = collection(db, COLLECTIONS.VENUE_NODES).withConverter(venueNodeConverter);
+    const snapshot = await getDocs(nodesRef);
+    if (snapshot.empty) return INITIAL_VENUE_NODES;
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getVenueNodesFromDb fallback:", err);
+    return INITIAL_VENUE_NODES;
+  }
+}
+
+/**
+ * Fetch all venue edges from Firestore (or mock fallback).
+ */
+export async function getVenueEdgesFromDb(): Promise<VenueEdge[]> {
+  try {
+    const edgesRef = collection(db, COLLECTIONS.VENUE_EDGES).withConverter(venueEdgeConverter);
+    const snapshot = await getDocs(edgesRef);
+    if (snapshot.empty) return INITIAL_VENUE_EDGES;
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getVenueEdgesFromDb fallback:", err);
+    return INITIAL_VENUE_EDGES;
+  }
+}
+
+/**
+ * Fetch all amenities from Firestore (or mock fallback).
+ */
+export async function getAmenitiesFromDb(): Promise<Amenity[]> {
+  try {
+    const amenitiesRef = collection(db, COLLECTIONS.AMENITIES).withConverter(amenityConverter);
+    const snapshot = await getDocs(amenitiesRef);
+    if (snapshot.empty) return INITIAL_AMENITIES;
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getAmenitiesFromDb fallback:", err);
+    return INITIAL_AMENITIES;
+  }
+}
+
+/**
+ * Fetch all incidents from Firestore (or mock fallback).
+ */
+export async function getIncidentsFromDb(): Promise<Incident[]> {
+  try {
+    const incidentsRef = collection(db, COLLECTIONS.INCIDENTS).withConverter(incidentConverter);
+    const snapshot = await getDocs(incidentsRef);
+    if (snapshot.empty) return INCIDENTS;
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getIncidentsFromDb fallback:", err);
+    return INCIDENTS;
+  }
+}
+
+/**
+ * Save an agent trace execution log to the agentTraces collection.
+ */
+export async function saveAgentTraceToDb(trace: AgentTrace): Promise<string | null> {
+  try {
+    const tracesRef = collection(db, COLLECTIONS.AGENT_TRACES).withConverter(agentTraceConverter);
+    const docRef = await addDoc(tracesRef, trace);
+    return docRef.id;
+  } catch (err) {
+    console.warn("[Firestore] saveAgentTraceToDb failed:", err);
+    return null;
+  }
+}
+
+/**
+ * Fetch recent agent traces from Firestore.
+ */
+export async function getAgentTracesFromDb(maxResults = 25): Promise<AgentTrace[]> {
+  try {
+    const tracesRef = collection(db, COLLECTIONS.AGENT_TRACES).withConverter(agentTraceConverter);
+    const q = query(tracesRef, orderBy("createdAt", "desc"), limit(maxResults));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((d) => d.data());
+  } catch (err) {
+    console.warn("[Firestore] getAgentTracesFromDb failed:", err);
+    return [];
+  }
+}
+
+/**
+ * Seed Firestore with initial mock zones, gates, nodes, edges, amenities, and incidents if empty.
+ */
+export async function seedFirestoreIfEmpty(): Promise<boolean> {
+  const result = await runFullDatabaseSeed();
+  return result.success;
+}
+
+/**
+ * Update zone in Firestore.
+ */
+export async function updateZoneInDb(zoneId: string, updates: Partial<Zone>): Promise<void> {
+  try {
+    const zoneDoc = doc(db, COLLECTIONS.ZONES, zoneId);
+    await updateDoc(zoneDoc, updates);
+  } catch (err) {
+    console.warn(`[Firestore] Failed to update zone ${zoneId}:`, err);
+  }
+}
+
+/**
+ * Update gate in Firestore.
+ */
+export async function updateGateInDb(gateId: string, updates: Partial<Gate>): Promise<void> {
+  try {
+    const gateDoc = doc(db, COLLECTIONS.GATES, gateId);
+    await updateDoc(gateDoc, updates);
+  } catch (err) {
+    console.warn(`[Firestore] Failed to update gate ${gateId}:`, err);
+  }
+}
+
+/**
+ * Create or update an incident in Firestore.
+ */
+export async function saveIncidentToDb(incident: Incident): Promise<void> {
+  try {
+    const incDoc = doc(db, COLLECTIONS.INCIDENTS, incident.id);
+    await setDoc(incDoc, incident, { merge: true });
+  } catch (err) {
+    console.warn(`[Firestore] Failed to save incident ${incident.id}:`, err);
+  }
+}
