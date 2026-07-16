@@ -25,7 +25,7 @@ When turnstile queues bottleneck or sector temperatures spike, PULSE does not ju
 
 ---
 
-## 🌟 Core Architectural Pillars & Command Modules
+##  Core Architectural Pillars & Command Modules
 
 ### 1.  Interactive 3D/Isometric Digital Twin Engine (`components/Stadium3DEngine.tsx`)
 * **Custom 60 FPS WebGL/Canvas Rendering Pipeline**: Zero-dependency mathematical 3D projection engine (`x, y, z` → `screenX, screenY` with dynamic quaternion/Euler angle rotation).
