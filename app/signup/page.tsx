@@ -118,7 +118,7 @@ export default function SignupPage() {
             <input
               type="text"
               required
-              placeholder="e.g. FIFA World Cup 2026 · Estadio Azteca Group"
+              placeholder="e.g. Dallas Stadium Operations Group"
               value={org}
               onChange={(e) => setOrg(e.target.value)}
               className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-all font-medium"

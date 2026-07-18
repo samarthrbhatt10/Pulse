@@ -1,6 +1,6 @@
 // PULSE — Complete Firestore Collection Schemas & Data Converters per 06_DATA_MODEL_AND_APIS.md
 import { DocumentData, QueryDocumentSnapshot, SnapshotOptions, FirestoreDataConverter } from "firebase/firestore";
-import { Zone, Incident, BroadcastMessage } from "../mockData";
+import { Zone, Incident, BroadcastMessage, calculateDensityLevel, calculateDensityValue } from "../mockData";
 
 export const COLLECTIONS = {
   ZONES: "zones",
@@ -182,14 +182,21 @@ export const zoneConverter: FirestoreDataConverter<Zone> = {
   },
   fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Zone {
     const data = snapshot.data(options)!;
+    const occupancy = data.occupancy ?? data.currentOccupancy ?? 0;
+    const capacity = data.capacity ?? 6500;
+    const areaSquareMeters = data.areaSquareMeters ?? 1000;
+    const densityValue = calculateDensityValue(occupancy, areaSquareMeters);
+    const density = data.density ?? calculateDensityLevel(occupancy, areaSquareMeters);
     return {
       id: snapshot.id,
       name: data.name ?? `Zone ${snapshot.id}`,
-      occupancy: data.occupancy ?? data.currentOccupancy ?? 0,
-      capacity: data.capacity ?? 6500,
-      percent: data.percent ?? Math.round(((data.occupancy ?? data.currentOccupancy ?? 0) / (data.capacity ?? 6500)) * 100),
+      occupancy,
+      capacity,
+      areaSquareMeters,
+      densityValue,
+      percent: data.percent ?? Math.round((occupancy / capacity) * 100),
       trend: data.trend ?? "stable",
-      density: data.density ?? "low",
+      density,
       lastUpdated: data.lastUpdated ?? new Date().toISOString(),
       location: data.location,
       pathD: data.pathD ?? "",

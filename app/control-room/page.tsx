@@ -180,29 +180,138 @@ const MOCK_SECTORS: SectorMetric[] = [
   { id: "SEC-D", name: "West Media & Grandstand", capacity: 20000, current: 13852, percent: 69.3, status: "Optimal", inflowRate: 680, temp: 21.2, color: "#10b981" },
 ];
 
+// ===== PULSE Ops Tactical AI Copilot Console =====
+function OpsTacticalCopilot() {
+  const [messages, setMessages] = useState<Array<{ role: "user" | "assistant"; content: string; trace?: any[] }>>([
+    {
+      role: "assistant",
+      content: "🛡️ **PULSE Tactical Command Copilot active (Role: OPS).**\nI am monitoring 8 stadium zones, 1,204 IoT nodes, and 3 open incidents across Dallas Stadium.\n\nAsk me for real-time Fruin LOS density briefings, CCTV deployments, or turnstile rerouting advisories.",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  async function handleSend(e?: React.FormEvent) {
+    e?.preventDefault();
+    if (!input.trim() || loading) return;
+    const q = input.trim();
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: q }]);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: q,
+          role: "ops",
+          history: messages.slice(-10).map((m) => ({ role: m.role, content: m.content })),
+          context: "Command Officer in Master Control Room requesting operational briefing, security deployment, or crowd rerouting.",
+        }),
+      });
+      const data = await res.json();
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: data.reply || "Briefing generated.", trace: data.toolTrace },
+      ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "⚠️ **Tactical Telemetry Briefing:**\nZone A density is at 7.57 p/m² (LOS E Critical). Recommend diverting incoming footfall at Gate 3 to Concourse B Locker Bay #4 immediately.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <section className="bg-card border border-primary/40 rounded-2xl flex flex-col overflow-hidden shadow-md min-h-[360px] max-h-[440px]">
+      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-border bg-primary/10 flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-primary text-[18px] animate-pulse">support_agent</span>
+          <div>
+            <div className="text-xs font-black uppercase tracking-wider text-foreground">Ops Tactical AI Advisor</div>
+            <div className="text-[9px] font-mono font-bold text-primary">ROLE: OPS COMMAND · LEVEL 5</div>
+          </div>
+        </div>
+        <span className="text-[10px] font-extrabold uppercase bg-primary text-primary-foreground px-2 py-0.5 rounded-full shadow-2xs">
+          Live Telemetry
+        </span>
+      </div>
+
+      <div className="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-3 text-xs">
+        {messages.map((m, idx) => (
+          <div key={idx} className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+            <div
+              className={`p-3 rounded-2xl max-w-[92%] leading-relaxed whitespace-pre-wrap ${
+                m.role === "user"
+                  ? "bg-primary text-primary-foreground font-semibold rounded-br-2xs shadow-2xs"
+                  : "bg-muted/80 border border-border text-foreground font-medium rounded-bl-2xs shadow-2xs"
+              }`}
+            >
+              {m.content}
+            </div>
+            {m.trace && m.trace.length > 0 && (
+              <div className="mt-1 flex flex-wrap gap-1">
+                {m.trace.map((t: any, i: number) => (
+                  <span key={i} className="text-[9px] font-mono bg-accent/15 text-accent border border-accent/30 px-1.5 py-0.5 rounded-md">
+                    ⚡ {t.tool} ({t.durationMs}ms)
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+        {loading && (
+          <div className="flex items-center gap-2 text-muted-foreground text-xs font-mono p-2 bg-muted/40 rounded-xl w-fit">
+            <span className="material-symbols-outlined text-primary text-sm animate-spin">autorenew</span>
+            <span>Synthesizing command telemetry...</span>
+          </div>
+        )}
+        <div ref={bottomRef} />
+      </div>
+
+      <form onSubmit={handleSend} className="p-2 border-t border-border bg-muted/30 flex items-center gap-2 flex-shrink-0">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Ask Ops AI: e.g. 'Status of Gate 3 security?' or 'Reroute Zone A'..."
+          className="flex-1 bg-card border border-border rounded-xl px-3 py-2 text-xs font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-all"
+        />
+        <button
+          type="submit"
+          disabled={loading || !input.trim()}
+          className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-primary-foreground px-3.5 py-2 rounded-xl text-xs font-black uppercase transition-all flex items-center gap-1 shadow-xs"
+        >
+          <span className="material-symbols-outlined text-sm">send</span>
+        </button>
+      </form>
+    </section>
+  );
+}
+
+import { usePulseSync } from "@/lib/usePulseSync";
+
 export default function ControlRoomDashboard() {
-  const [zones, setZones] = useState(ZONES);
+  const { zones, incidents } = usePulseSync();
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [centerMode, setCenterMode] = useState<"3d" | "heatmap">("3d");
   const [viewLayer, setViewLayer] = useState<"isometric" | "heatmap" | "turnstile" | "optical">("isometric");
   const [selectedSector, setSelectedSector] = useState<SectorMetric>(MOCK_SECTORS[0]);
 
-  const totalAttendees = 74812;
-  const totalCapacity = 87523;
+  const totalAttendees = zones.reduce((acc, z) => acc + Math.round((z.capacity * z.percent) / 100), 0) || 74812;
+  const totalCapacity = zones.reduce((acc, z) => acc + z.capacity, 0) || 87523;
   const capacityPct = Math.round((totalAttendees / totalCapacity) * 100);
-
-  // Simulate live zone updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setZones((prev) =>
-        prev.map((z) => ({
-          ...z,
-          percent: Math.min(100, Math.max(5, z.percent + (Math.random() - 0.48) * 1.5)),
-        }))
-      );
-    }, 8000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="p-3 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch min-h-[calc(100vh-4rem)]">
@@ -232,7 +341,7 @@ export default function ControlRoomDashboard() {
                     3D Digital Twin
                   </h3>
                   <p className="text-[10px] text-muted-foreground font-semibold leading-tight mt-0.5">
-                    Full FIFA 2026 flagship telemetry suite
+                    Full flagship telemetry suite
                   </p>
                 </div>
               </div>
@@ -289,67 +398,6 @@ export default function ControlRoomDashboard() {
         </div>
       </section>
 
-      {/* PROFESSIONAL FIFA MATCH ANALYST TACTICAL HUD CARD (Full 12 cols) */}
-      <section className="lg:col-span-12">
-        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-border rounded-3xl p-5 shadow-2xl space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-3 border-b border-border/80">
-            <div className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full bg-emerald-400 animate-ping" />
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400 block">
-                  PROFESSIONAL FIFA MATCH ANALYST & TACTICAL HAWK-EYE ARRAY
-                </span>
-                <h3 className="text-base sm:text-lg font-black text-white tracking-tight">
-                  Estadio Azteca · MEXICO 🇲🇽 vs ARGENTINA 🇦🇷 (World Cup 2026™ Flagship)
-                </h3>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-400 font-mono text-xs font-black animate-pulse">
-                LIVE · 78' MIN (2 - 1)
-              </span>
-              <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs font-bold">
-                PITCH: 42% MOISTURE · OPTIMAL TURF
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-            <div className="bg-slate-900/80 p-3 rounded-2xl border border-border/60">
-              <span className="text-[9px] font-black uppercase text-muted-foreground block">Match xG (Expected Goals)</span>
-              <span className="text-sm font-black text-white font-mono mt-0.5 block">MEX 1.84 — 2.12 ARG</span>
-              <span className="text-[10px] text-emerald-400 font-bold">MEX +0.32 above forecast</span>
-            </div>
-            <div className="bg-slate-900/80 p-3 rounded-2xl border border-border/60">
-              <span className="text-[9px] font-black uppercase text-muted-foreground block">Possession & Field Tilt</span>
-              <span className="text-sm font-black text-cyan-400 font-mono mt-0.5 block">MEX 48% | ARG 52%</span>
-              <span className="text-[10px] text-slate-400">Tilt: +14% ARG (last 10m)</span>
-            </div>
-            <div className="bg-slate-900/80 p-3 rounded-2xl border border-border/60">
-              <span className="text-[9px] font-black uppercase text-muted-foreground block">Hawk-Eye Ball Tracking</span>
-              <span className="text-sm font-black text-amber-400 font-mono mt-0.5 block">58.4 km/h Avg Velocity</span>
-              <span className="text-[10px] text-slate-400">100% Optical Calibration</span>
-            </div>
-            <div className="bg-slate-900/80 p-3 rounded-2xl border border-border/60">
-              <span className="text-[9px] font-black uppercase text-muted-foreground block">Crowd Acoustic Roar Index</span>
-              <span className="text-sm font-black text-red-400 font-mono mt-0.5 block">94.8 dB · PEAK ROAR</span>
-              <span className="text-[10px] text-slate-400">Recorded at 74' MEX goal</span>
-            </div>
-            <div className="bg-slate-900/80 p-3 rounded-2xl border border-border/60">
-              <span className="text-[9px] font-black uppercase text-muted-foreground block">Turnstile Inflow Rate</span>
-              <span className="text-sm font-black text-emerald-400 font-mono mt-0.5 block">4,820 fans/min</span>
-              <span className="text-[10px] text-slate-400">Gates 1-12 Active</span>
-            </div>
-            <div className="bg-slate-900/80 p-3 rounded-2xl border border-border/60">
-              <span className="text-[9px] font-black uppercase text-muted-foreground block">Total Footfall Attendance</span>
-              <span className="text-sm font-black text-white font-mono mt-0.5 block">74,812 / 87,523</span>
-              <span className="text-[10px] text-cyan-400 font-bold">85.5% Load</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CENTERPIECE: 3D DIGITAL TWIN vs 2D HEATMAP TOGGLE (8 cols) */}
       <section className="lg:col-span-7 xl:col-span-8 flex flex-col gap-4 min-h-0">
         <div className="flex flex-wrap items-center justify-between gap-3 bg-card border border-border rounded-2xl p-3 shadow-sm">
@@ -389,8 +437,8 @@ export default function ControlRoomDashboard() {
         {centerMode === "3d" ? (
           <div className="space-y-4">
             <Stadium3DEngine
-              stadiumId="azteca"
-              stadiumName="Estadio Azteca — FIFA 2026 Flagship Command"
+              stadiumId="dallas"
+              stadiumName="Dallas Stadium Command Center"
               viewLayer={viewLayer}
               isScanning={false}
               sectors={MOCK_SECTORS}
@@ -425,9 +473,10 @@ export default function ControlRoomDashboard() {
         )}
       </section>
 
-      {/* RIGHT SIDEBAR: Incidents + Agent Trace (4 cols) */}
+      {/* RIGHT SIDEBAR: Incidents + Ops Copilot + Agent Trace (4 cols) */}
       <aside className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6 min-h-0">
-        <IncidentQueue incidents={INCIDENTS} />
+        <OpsTacticalCopilot />
+        <IncidentQueue incidents={incidents} />
         <AgentTracePanel />
       </aside>
     </div>

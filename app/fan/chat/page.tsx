@@ -11,21 +11,21 @@ const LANGUAGES = [
 ];
 
 const LOCALIZED_GREETINGS: Record<string, string> = {
-  en: "Hi! I'm your PULSE Stadium Assistant 🏟️ Powered by Gemini 2.5 AI. I can help you find amenities, navigate turn-by-turn inside the FIFA 2026 stadium, check crowd bottlenecks, or order express in-seat food. Ask me anything — I speak your language!",
-  es: "¡Hola! Soy tu Asistente de Estadio PULSE 🏟️ Impulsado por Gemini 2.5 AI. Puedo ayudarte a encontrar servicios, navegar paso a paso por el estadio FIFA 2026, consultar niveles de multitud o pedir comida directo a tu asiento. ¡Pregúntame lo que quieras!",
-  fr: "Bonjour ! Je suis votre Assistant Stade PULSE 🏟️ Propulsé par Gemini 2.5 AI. Je peux vous guider vers votre siège, trouver les toilettes ou la restauration, surveiller les foules et commander votre repas directement en tribune FIFA 2026. Posez vos questions !",
-  hi: "नमस्ते! मैं आपका PULSE स्टेडियम असिस्टेंट हूँ 🏟️ Gemini 2.5 AI द्वारा संचालित। मैं आपको फीफा 2026 स्टेडियम में नेविगेट करने, सुविधाएं खोजने, भीड़भाड़ जांचने और सीट पर खाना ऑर्डर करने में मदद कर सकता हूँ। कुछ भी पूछें!",
-  ar: "مرحباً! أنا مساعد ملعب PULSE الذكي 🏟️ مدعوم بـ Gemini 2.5 AI. يمكنني مساعدتك في العثور على المرافق، والتنقل خطوة بخطوة داخل استاد كأس العالم 2026، ومتابعة الازدحام، أو طلب الطعام مباشرة إلى مقعدك. اسألني أي شيء!",
-  pt: "Olá! Sou seu Assistente de Estádio PULSE 🏟️ Desenvolvido por Gemini 2.5 AI. Posso te ajudar a encontrar serviços, navegar dentro do estádio da Copa do Mundo 2026, verificar multidões ou pedir comida no seu assento. Pergunte qualquer coisa!",
+  en: "Hi! I'm your PULSE Stadium Assistant 🏟️ Powered by Gemini 2.5 AI. I can help you order Smart On-Seat F&B to Section 104 or Express Lockers, check real-time Fruin LOS concourse wait times, navigate turn-by-turn inside Dallas Stadium, or report safety concerns. Ask me anything — I speak your language!",
+  es: "¡Hola! Soy tu Asistente de Estadio PULSE 🏟️ Impulsado por Gemini 2.5 AI. Puedo ayudarte a pedir comida a tu asiento o taquilla exprés, consultar tiempos de espera con telemetría Fruin LOS, navegar dentro del estadio o reportar incidencias. ¡Pregúntame lo que quieras!",
+  fr: "Bonjour ! Je suis votre Assistant Stade PULSE 🏟️ Propulsé par Gemini 2.5 AI. Je peux vous guider pour commander de la nourriture à votre siège ou en casier express, surveiller les temps d'attente sur les concourses, ou signaler un incident. Posez vos questions !",
+  hi: "नमस्ते! मैं आपका PULSE स्टेडियम असिस्टेंट हूँ 🏟️ Gemini 2.5 AI द्वारा संचालित। मैं आपको सीट पर खाना ऑर्डर करने, फ्रूइन LOS भीड़भाड़ जांचने और स्टेडियम में नेविगेट करने में मदद कर सकता हूँ। कुछ भी पूछें!",
+  ar: "مرحباً! أنا مساعد ملعب PULSE الذكي 🏟️ مدعوم بـ Gemini 2.5 AI. يمكنني مساعدتك في طلب الطعام مباشرة إلى مقعدك أو الخزائن الذكية، ومتابعة الازدحام بدقة Fruin LOS، أو التنقل داخل الاستاد. اسألني أي شيء!",
+  pt: "Olá! Sou seu Assistente de Estádio PULSE 🏟️ Desenvolvido por Gemini 2.5 AI. Posso te ajudar a pedir comida no seu assento ou armário expresso, verificar filas nos corredores com dados Fruin LOS ou navegar pelo estádio. Pergunte qualquer coisa!",
 };
 
 const LOCALIZED_QUICK_REPLIES: Record<string, string[]> = {
-  en: ["Where's the restroom? 🚽", "Is Zone A crowded?", "Find me food nearby 🍔", "How do I reach seat 118-14?"],
-  es: ["¿Dónde está el baño? 🚽", "¿Está llena la Zona A?", "Búscame comida cerca 🍔", "¿Cómo llego a mi asiento 118-14?"],
-  fr: ["Où sont les toilettes ? 🚽", "La Zone A est-elle bondée ?", "Trouvez-moi à manger 🍔", "Comment aller au siège 118-14 ?"],
-  hi: ["शौचालय कहाँ है? 🚽", "क्या ज़ोन A में भीड़ है?", "नज़दीकी खाना खोजें 🍔", "सीट 118-14 तक कैसे पहुंचें?"],
-  ar: ["أين دورات المياه؟ 🚽", "هل المنطقة A مزدحمة؟", "ابحث عن طعام قريب 🍔", "كيف أصل إلى المقعد 118-14؟"],
-  pt: ["Onde fica o banheiro? 🚽", "A Zona A está lotada?", "Encontrar comida perto 🍔", "Como chego ao assento 118-14?"],
+  en: ["Order F&B to my seat 🍔", "Check concourse wait times 📊", "Find nearest restroom 🚽", "How do I reach Locker Bay #4?"],
+  es: ["Pedir comida al asiento 🍔", "Tiempos de espera en concourse 📊", "¿Dónde está el baño? 🚽", "¿Cómo llego a Taquilla #4?"],
+  fr: ["Commander repas au siège 🍔", "Temps d'attente concourse 📊", "Où sont les toilettes ? 🚽", "Comment aller au Casier #4 ?"],
+  hi: ["सीट पर खाना ऑर्डर करें 🍔", "कॉन्कोर्स में भीड़ की स्थिति 📊", "शौचालय कहाँ है? 🚽", "लॉकर बे #4 कैसे पहुंचें?"],
+  ar: ["طلب طعام إلى مقعدي 🍔", "أوقات الانتظار في الممرات 📊", "أين دورات المياه؟ 🚽", "كيف أصل إلى الخزائن رقم 4؟"],
+  pt: ["Pedir comida no assento 🍔", "Tempo de espera no corredor 📊", "Onde fica o banheiro? 🚽", "Como chego ao Armário #4?"],
 };
 
 interface Message {
@@ -82,7 +82,12 @@ export default function FanChatPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           query,
-          context: `Fan inside FIFA 2026 stadium. Target preferred language: ${activeLang.toUpperCase()} (${LANGUAGES.find((l) => l.code === activeLang)?.label ?? "English"}). Please respond fully in this exact language.`,
+          role: "fan",
+          history: messages.slice(-10).map((m) => ({
+            role: m.role === "user" ? "user" : "assistant",
+            content: m.content,
+          })),
+          context: `Fan inside live event stadium. Target preferred language: ${activeLang.toUpperCase()} (${LANGUAGES.find((l) => l.code === activeLang)?.label ?? "English"}). Please respond fully in this exact language.`,
         }),
       });
       const data = await res.json();
@@ -131,7 +136,7 @@ export default function FanChatPage() {
             </h1>
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-semibold">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span>FIFA 2026 Neural Translation Active</span>
+              <span>Live Neural Translation Active</span>
             </div>
           </div>
         </div>

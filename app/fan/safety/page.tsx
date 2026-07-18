@@ -7,9 +7,9 @@ const EMERGENCY_CONTACTS = [
 ];
 
 const NEAREST_EXITS = [
-  { gate: "Gate 2 (North East)", concourse: "Concourse A", distance: "180m (~2 mins)", status: "OPEN - FAST TRACK" },
-  { gate: "Gate 5 (South East)", concourse: "Concourse C", distance: "220m (~3 mins)", status: "OPEN" },
-  { gate: "Gate 7 (West Concourse)", concourse: "Concourse B", distance: "300m (~4 mins)", status: "MODERATE TRAFFIC" },
+  { gate: "Gate 3 Express (North Bowl)", concourse: "Concourse B", distance: "180m (~2 mins)", status: "OPEN - FRUIN LOS A (FAST)" },
+  { gate: "Gate 5 (South Plaza)", concourse: "Concourse C", distance: "220m (~3 mins)", status: "OPEN - FRUIN LOS B" },
+  { gate: "Gate 1 (Concourse A)", concourse: "Concourse A", distance: "300m (~4 mins)", status: "MODERATE - FRUIN LOS C" },
 ];
 
 export default function SafetyPage() {
@@ -22,7 +22,7 @@ export default function SafetyPage() {
           Safety, SOS & Emergency Hub
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          World Cup 2026 Emergency Assistance Protocol. Live connection to PULSE Ops Command.
+          World Cup 2026 Emergency Assistance Protocol. Live connection to PULSE Ops Command & Paramedic Dispatch.
         </p>
       </div>
 
@@ -33,11 +33,11 @@ export default function SafetyPage() {
         </div>
         <h2 className="text-lg sm:text-xl font-black text-foreground">Immediate Emergency Assistance</h2>
         <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto mt-1 mb-4">
-          Pressing the SOS beacon immediately shares your seat coordinates (Sec 105, Row 12) with the nearest medical and security teams.
+          Pressing the SOS beacon immediately broadcasts your exact UWB seat coordinates (<b>Section 104, Row 12, Seat 8</b>) and live video telemetry with nearest medical and security teams.
         </p>
         <button className="px-6 py-3 rounded-2xl bg-red-500 hover:bg-red-600 text-white font-extrabold text-sm tracking-wider uppercase shadow-md active:scale-95 transition-all flex items-center gap-2">
           <span className="material-symbols-outlined">wifi_tethering</span>
-          <span>Trigger Live SOS Alert</span>
+          <span>Trigger Live SOS Beacon (Sec 104 · Row 12)</span>
         </button>
       </div>
 

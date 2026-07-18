@@ -21,82 +21,82 @@ interface StadiumTelemetry {
   sectors: SectorMetric[];
 }
 
-const FLAGSHIP_AZTECA: StadiumTelemetry = {
-  id: "azteca",
-  name: "Estadio Azteca — FIFA 2026 Flagship Command",
-  city: "Mexico City, Mexico · Opening Match & Final Venue",
-  match: "MEXICO 🇲🇽 vs ARGENTINA 🇦🇷 (World Cup 2026™)",
+const DALLAS_STADIUM: StadiumTelemetry = {
+  id: "dallas",
+  name: "Dallas Stadium — Central Command",
+  city: "Dallas, TX, USA · Semifinal & Final Venue",
+  match: "HOME CLUB vs VISITORS (Championship Series)",
   matchTime: "LIVE · 74' MIN (2-1)",
-  capacity: 87523,
-  liveFootfall: 74812,
+  capacity: 94000,
+  liveFootfall: 80370,
   occupancyPercent: 85.5,
   turnstileThroughput: 4820,
-  nfcTickets: 64110,
-  biometricTickets: 10702,
-  concessionRevenue: "$784,920",
-  concessionVelocity: "$14,210 / min",
+  nfcTickets: 68110,
+  biometricTickets: 12260,
+  concessionRevenue: "$894,920",
+  concessionVelocity: "$15,410 / min",
   weather: "22°C Clear · Wind 14 km/h NW",
   pitchHumidity: "42% Optimal",
   sectors: [
-    { id: "SEC-A", name: "North Plaza Bowl (Gates 1-3)", capacity: 24000, current: 22680, percent: 94.5, status: "Critical", inflowRate: 1640, temp: 23.4, color: "#ef4444" },
-    { id: "SEC-B", name: "East Concourse Tiers 1-2", capacity: 22000, current: 18480, percent: 84.0, status: "Moderate", inflowRate: 1120, temp: 22.8, color: "#f59e0b" },
-    { id: "SEC-C", name: "South Palcos VIP & Suites", capacity: 21523, current: 19800, percent: 92.0, status: "Congested", inflowRate: 1380, temp: 21.9, color: "#f59e0b" },
-    { id: "SEC-D", name: "West Media & Grandstand", capacity: 20000, current: 13852, percent: 69.3, status: "Optimal", inflowRate: 680, temp: 21.2, color: "#10b981" },
+    { id: "SEC-A", name: "North Plaza Bowl (Gates 1-3)", capacity: 26000, current: 24570, percent: 94.5, status: "Critical", inflowRate: 1640, temp: 23.4, color: "#ef4444" },
+    { id: "SEC-B", name: "East Concourse Tiers 1-2", capacity: 24000, current: 20160, percent: 84.0, status: "Moderate", inflowRate: 1120, temp: 22.8, color: "#f59e0b" },
+    { id: "SEC-C", name: "South VIP & Suites", capacity: 23000, current: 21160, percent: 92.0, status: "Congested", inflowRate: 1380, temp: 21.9, color: "#f59e0b" },
+    { id: "SEC-D", name: "West Media & Grandstand", capacity: 21000, current: 14480, percent: 69.0, status: "Optimal", inflowRate: 680, temp: 21.2, color: "#10b981" },
   ],
 };
 
 const OTHER_STADIUMS: StadiumTelemetry[] = [
   {
-    ...FLAGSHIP_AZTECA,
-    id: "metlife",
-    name: "MetLife Stadium — NY/NJ Flagship",
-    city: "East Rutherford, NJ, USA · Semifinal Venue",
-    match: "USA 🇺🇸 vs ENGLAND 🏴󠁧󠁢󠁥󠁮󠁧󠁿 (Group Stage)",
+    ...DALLAS_STADIUM,
+    id: "mexico-city",
+    name: "Mexico City Stadium — South Command",
+    city: "Mexico City, Mexico · Opening Match Venue",
+    match: "DIVISION ALPHA vs DIVISION BETA (Playoffs)",
     matchTime: "HALFTIME · 45' (1-1)",
-    capacity: 82500,
-    liveFootfall: 79200,
+    capacity: 87523,
+    liveFootfall: 84022,
     occupancyPercent: 96.0,
     turnstileThroughput: 5120,
     concessionRevenue: "$912,400",
     concessionVelocity: "$16,800 / min",
     sectors: [
-      { id: "SEC-100", name: "Lower Bowl 100s", capacity: 30000, current: 29400, percent: 98.0, status: "Critical", inflowRate: 1840, temp: 21.5, color: "#ef4444" },
-      { id: "SEC-200", name: "Mezzanine Club 200s", capacity: 22500, current: 21150, percent: 94.0, status: "Critical", inflowRate: 1420, temp: 21.0, color: "#ef4444" },
-      { id: "SEC-300", name: "Upper Grandstand 300s", capacity: 30000, current: 28650, percent: 95.5, status: "Congested", inflowRate: 1860, temp: 20.2, color: "#f59e0b" },
+      { id: "SEC-100", name: "Lower Bowl 100s", capacity: 32000, current: 31360, percent: 98.0, status: "Critical", inflowRate: 1840, temp: 21.5, color: "#ef4444" },
+      { id: "SEC-200", name: "Mezzanine Club 200s", capacity: 24000, current: 22560, percent: 94.0, status: "Critical", inflowRate: 1420, temp: 21.0, color: "#ef4444" },
+      { id: "SEC-300", name: "Upper Grandstand 300s", capacity: 31523, current: 30102, percent: 95.5, status: "Congested", inflowRate: 1860, temp: 20.2, color: "#f59e0b" },
     ],
   },
   {
-    ...FLAGSHIP_AZTECA,
-    id: "sofi",
-    name: "SoFi Stadium — Los Angeles Command",
-    city: "Inglewood, CA, USA · Quarterfinal Venue",
-    match: "BRAZIL 🇧🇷 vs FRANCE 🇫🇷 (Quarterfinal)",
+    ...DALLAS_STADIUM,
+    id: "new-york-new-jersey",
+    name: "New York New Jersey Stadium — North Command",
+    city: "East Rutherford, NJ, USA · Semifinal Venue",
+    match: "STARS vs CHALLENGERS (Invitational Cup)",
     matchTime: "LIVE · 18' MIN (0-0)",
-    capacity: 70240,
-    liveFootfall: 66800,
+    capacity: 82500,
+    liveFootfall: 78457,
     occupancyPercent: 95.1,
     turnstileThroughput: 3940,
     concessionRevenue: "$840,100",
     concessionVelocity: "$13,900 / min",
     sectors: [
-      { id: "SOFI-A", name: "Infinity Screen Bowl", capacity: 25000, current: 23900, percent: 95.6, status: "Critical", inflowRate: 1540, temp: 22.1, color: "#ef4444" },
-      { id: "SOFI-B", name: "Canyon Concourse", capacity: 25240, current: 23100, percent: 91.5, status: "Congested", inflowRate: 1320, temp: 21.8, color: "#f59e0b" },
-      { id: "SOFI-C", name: "Patio VIP Suites", capacity: 20000, current: 19800, percent: 99.0, status: "Critical", inflowRate: 1080, temp: 21.4, color: "#ef4444" },
+      { id: "NYNJ-A", name: "Infinity Screen Bowl", capacity: 28000, current: 26768, percent: 95.6, status: "Critical", inflowRate: 1540, temp: 22.1, color: "#ef4444" },
+      { id: "NYNJ-B", name: "Canyon Concourse", capacity: 28500, current: 26077, percent: 91.5, status: "Congested", inflowRate: 1320, temp: 21.8, color: "#f59e0b" },
+      { id: "NYNJ-C", name: "Patio VIP Suites", capacity: 26000, current: 25740, percent: 99.0, status: "Critical", inflowRate: 1080, temp: 21.4, color: "#ef4444" },
     ],
   },
 ];
 
 export default function DribbbleStadiumAnalyticsPage() {
-  const [activeStadium, setActiveStadium] = useState<StadiumTelemetry>(FLAGSHIP_AZTECA);
-  const [selectedSector, setSelectedSector] = useState<SectorMetric>(FLAGSHIP_AZTECA.sectors[0]);
+  const [activeStadium, setActiveStadium] = useState<StadiumTelemetry>(DALLAS_STADIUM);
+  const [selectedSector, setSelectedSector] = useState<SectorMetric>(DALLAS_STADIUM.sectors[0]);
   const [selectedGate, setSelectedGate] = useState<GateNode | null>(null);
   const [viewLayer, setViewLayer] = useState<"isometric" | "heatmap" | "turnstile" | "optical">("isometric");
   const [cameraFeed, setCameraFeed] = useState<string>("CAM-04 Gate 4");
   const [isScanning, setIsScanning] = useState(false);
   const [aiProtocolStatus, setAiProtocolStatus] = useState<string | null>(null);
 
-  const [liveFootfall, setLiveFootfall] = useState(FLAGSHIP_AZTECA.liveFootfall);
-  const [livePulseRate, setLivePulseRate] = useState(FLAGSHIP_AZTECA.turnstileThroughput);
+  const [liveFootfall, setLiveFootfall] = useState(DALLAS_STADIUM.liveFootfall);
+  const [livePulseRate, setLivePulseRate] = useState(DALLAS_STADIUM.turnstileThroughput);
 
   useEffect(() => {
     setLiveFootfall(activeStadium.liveFootfall);
@@ -129,14 +129,14 @@ export default function DribbbleStadiumAnalyticsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground p-4 sm:p-6 lg:p-8 space-y-6 font-sans transition-colors duration-200">
-      {/* Real-World Official FIFA 2026 Sponsor Header Ribbon */}
+      {/* Real-World Official Sponsor Header Ribbon */}
       <div className="w-full bg-card dark:bg-gradient-to-r dark:from-slate-900 dark:via-cyan-950/60 dark:to-slate-900 border border-border dark:border-slate-800 rounded-2xl py-2.5 px-4 flex items-center justify-between overflow-hidden shadow-sm dark:shadow-lg transition-colors">
         <div className="flex items-center gap-2">
           <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500 dark:text-emerald-400 font-mono text-[10px] font-black uppercase tracking-wider">
-            ★ FIFA 2026™ SPONSOR NETWORK
+            ★ OFFICIAL SPONSOR NETWORK
           </span>
           <span className="text-xs font-mono font-bold text-muted-foreground dark:text-slate-300 hidden sm:inline">
-            OFFICIAL TOURNAMENT TELEMETRY SUITE
+            OFFICIAL EVENT TELEMETRY SUITE
           </span>
         </div>
         <div className="flex items-center gap-4 text-[11px] font-mono font-black text-teal-600 dark:text-cyan-300 overflow-x-auto whitespace-nowrap scrollbar-none">
@@ -185,7 +185,7 @@ export default function DribbbleStadiumAnalyticsPage() {
 
           {/* Multi-Stadium Switcher */}
           <div className="flex flex-wrap items-center gap-2">
-            {[FLAGSHIP_AZTECA, ...OTHER_STADIUMS].map((st) => (
+            {[DALLAS_STADIUM, ...OTHER_STADIUMS].map((st) => (
               <button
                 key={st.id}
                 onClick={() => setActiveStadium(st)}
@@ -195,7 +195,7 @@ export default function DribbbleStadiumAnalyticsPage() {
                     : "bg-card dark:bg-slate-900/90 border-border dark:border-slate-800 text-muted-foreground dark:text-slate-400 hover:text-foreground dark:hover:text-white hover:border-border dark:hover:border-slate-700"
                 }`}
               >
-                <span>{st.id === "azteca" ? "🇲🇽 Estadio Azteca" : st.id === "metlife" ? "🇺🇸 MetLife NY/NJ" : "🇺🇸 SoFi LA"}</span>
+                <span>{st.id === "dallas" ? "🏟️ Dallas Stadium" : st.id === "mexico-city" ? "🏟️ Mexico City Stadium" : "🏟️ NY/NJ Stadium"}</span>
               </button>
             ))}
           </div>
@@ -365,7 +365,7 @@ export default function DribbbleStadiumAnalyticsPage() {
               {[
                 { id: "CAM-04 Gate 4", label: "Gate 4 Turnstile", desc: "Queue analysis" },
                 { id: "CAM-12 North VIP", label: "North Plaza VIP", desc: "Biometric node" },
-                { id: "CAM-18 Pitch AR", label: "Pitch Perimeter", desc: "Player/Ball Hawk-Eye" },
+                { id: "CAM-18 Pitch AR", label: "Pitch Perimeter", desc: "Player/Ball Optical Tracking" },
                 { id: "CAM-22 Concourse", label: "Concourse C Bowl", desc: "Heatmap monitoring" },
               ].map((cam) => (
                 <button

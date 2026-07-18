@@ -8,6 +8,8 @@ export interface Zone {
   name: string;
   occupancy: number;
   capacity: number;
+  areaSquareMeters?: number; // physical area in square meters per Fruin LOS
+  densityValue?: number;     // calculated density in people/m²
   percent: number;
   trend: "rising" | "falling" | "stable";
   density: ZoneDensity;
@@ -58,56 +60,56 @@ export interface Gate {
 
 export const ZONES: Zone[] = [
   {
-    id: "A", name: "Zone A — North Stand", occupancy: 6110, capacity: 6500,
+    id: "A", name: "Zone A — North Stand", occupancy: 6110, capacity: 6500, areaSquareMeters: 750, densityValue: 8.15,
     percent: 94, trend: "rising", density: "critical",
     lastUpdated: "00:04:12 ago",
     pathD: "M400,100 L600,100 L650,180 L350,180 Z",
     labelX: 490, labelY: 145,
   },
   {
-    id: "B", name: "Zone B — North East", occupancy: 2730, capacity: 6500,
+    id: "B", name: "Zone B — North East", occupancy: 2730, capacity: 6500, areaSquareMeters: 2000, densityValue: 1.37,
     percent: 42, trend: "stable", density: "low",
     lastUpdated: "00:00:08 ago",
     pathD: "M620,110 L830,170 L780,250 L580,190 Z",
     labelX: 700, labelY: 185,
   },
   {
-    id: "C", name: "Zone C — East Stand", occupancy: 4420, capacity: 6500,
+    id: "C", name: "Zone C — East Stand", occupancy: 4420, capacity: 6500, areaSquareMeters: 1500, densityValue: 2.95,
     percent: 68, trend: "rising", density: "medium",
     lastUpdated: "00:00:08 ago",
     pathD: "M840,190 L840,410 L740,380 L740,220 Z",
     labelX: 760, labelY: 310,
   },
   {
-    id: "D", name: "Zone D — South East", occupancy: 1365, capacity: 6500,
+    id: "D", name: "Zone D — South East", occupancy: 1365, capacity: 6500, areaSquareMeters: 1500, densityValue: 0.91,
     percent: 21, trend: "falling", density: "low",
     lastUpdated: "00:00:08 ago",
     pathD: "M830,430 L620,490 L580,410 L780,350 Z",
     labelX: 700, labelY: 455,
   },
   {
-    id: "E", name: "Zone E — South Stand", occupancy: 5915, capacity: 6500,
+    id: "E", name: "Zone E — South Stand", occupancy: 5915, capacity: 6500, areaSquareMeters: 730, densityValue: 8.10,
     percent: 91, trend: "rising", density: "critical",
     lastUpdated: "00:01:05 ago",
     pathD: "M600,500 L400,500 L350,420 L650,420 Z",
     labelX: 490, labelY: 465,
   },
   {
-    id: "F", name: "Zone F — South West", occupancy: 4680, capacity: 6500,
+    id: "F", name: "Zone F — South West", occupancy: 4680, capacity: 6500, areaSquareMeters: 1500, densityValue: 3.12,
     percent: 72, trend: "stable", density: "medium",
     lastUpdated: "00:00:08 ago",
     pathD: "M380,490 L170,430 L220,350 L420,410 Z",
     labelX: 265, labelY: 450,
   },
   {
-    id: "G", name: "Zone G — West Stand", occupancy: 2145, capacity: 6500,
+    id: "G", name: "Zone G — West Stand", occupancy: 2145, capacity: 6500, areaSquareMeters: 1600, densityValue: 1.34,
     percent: 33, trend: "falling", density: "low",
     lastUpdated: "00:00:08 ago",
     pathD: "M160,410 L160,190 L260,220 L260,380 Z",
     labelX: 185, labelY: 310,
   },
   {
-    id: "H", name: "Zone H — North West", occupancy: 780, capacity: 6500,
+    id: "H", name: "Zone H — North West", occupancy: 780, capacity: 6500, areaSquareMeters: 1200, densityValue: 0.65,
     percent: 12, trend: "stable", density: "low",
     lastUpdated: "00:00:08 ago",
     pathD: "M170,170 L380,110 L420,190 L220,250 Z",
@@ -207,6 +209,33 @@ export const DEMO_SCRIPT = [
   { delayMs: 15000, incidentId: "CRW-0091", action: "update", zonePercent: 75 },
   { delayMs: 30000, incidentId: "SEC-0431", action: "resolve" },
 ];
+
+/**
+ * Fruin's Level of Service (LOS) Density Bands for Crowd Science & Safety:
+ * - < 1.5 people/m²: Normal (low) — Free movement, LOS A-C
+ * - 1.5–4.0 people/m²: Moderate (medium) — Restricted movement, Fruin LOS D-E territory
+ * - 4.0–8.0 people/m²: High/Critical (high) — Approaching real crowd-crush-risk density (peer-reviewed analysis of 2022 Itaewon crush measured avg crush density at 7.57 people/m², peak 9.95)
+ * - > 8.0 people/m²: Critical/Emergency (critical) — Extreme crush hazard, LOS F+
+ */
+export const FRUIN_THRESHOLDS = {
+  NORMAL_MAX: 1.5,
+  MODERATE_MAX: 4.0,
+  HIGH_MAX: 8.0,
+} as const;
+
+export function calculateDensityLevel(occupancy: number, areaSquareMeters?: number): ZoneDensity {
+  if (!areaSquareMeters || areaSquareMeters <= 0) return "low";
+  const density = occupancy / areaSquareMeters;
+  if (density > FRUIN_THRESHOLDS.HIGH_MAX) return "critical";
+  if (density >= FRUIN_THRESHOLDS.MODERATE_MAX) return "high";
+  if (density >= FRUIN_THRESHOLDS.NORMAL_MAX) return "medium";
+  return "low";
+}
+
+export function calculateDensityValue(occupancy: number, areaSquareMeters?: number): number {
+  if (!areaSquareMeters || areaSquareMeters <= 0) return 0;
+  return Number((occupancy / areaSquareMeters).toFixed(2));
+}
 
 // Helper: zone density color
 export function densityColor(density: ZoneDensity): string {

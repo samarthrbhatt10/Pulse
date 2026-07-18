@@ -6,10 +6,9 @@ import { ThemeToggle } from "../components/ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/fan", label: "Home", icon: "home" },
+  { href: "/fan/order", label: "F&B Order", icon: "restaurant" },
   { href: "/fan/map", label: "Map (3D)", icon: "map" },
-  { href: "/fan/order", label: "Order", icon: "restaurant" },
   { href: "/fan/chat", label: "AI Chat", icon: "chat_bubble" },
-  { href: "/fan/match-hub", label: "Match Hub", icon: "sports_soccer" },
   { href: "/fan/safety", label: "Safety", icon: "emergency" },
 ];
 
@@ -18,7 +17,7 @@ export default function FanLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [mobilePreview, setMobilePreview] = useState(false);
   const [userRole, setUserRole] = useState<string | null>("fan");
-  const [userName, setUserName] = useState("World Cup Fan");
+  const [userName, setUserName] = useState("Event Fan");
 
   useEffect(() => {
     if (typeof window !== "undefined") {

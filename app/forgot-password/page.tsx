@@ -50,7 +50,7 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleResetRequest} className="space-y-4 text-left">
               <div>
                 <label className="text-xs font-black uppercase tracking-wider text-foreground block mb-1">
-                  Registered Email / FIFA ID
+                  Registered Email / Operator ID
                 </label>
                 <input
                   type="email"

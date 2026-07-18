@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import { INCIDENTS, severityBg, severityBadge } from "@/lib/mockData";
+import { usePulseSync } from "@/lib/usePulseSync";
 
 export default function IncidentsPage() {
+  const { incidents } = usePulseSync();
   return (
     <div className="min-h-[calc(100vh-4rem)] p-4 sm:p-8 max-w-5xl mx-auto">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
@@ -17,12 +19,12 @@ export default function IncidentsPage() {
         </div>
         <div className="flex items-center gap-2 text-xs font-black text-white bg-red-600 px-3.5 py-2 rounded-xl uppercase tracking-wider shadow-sm animate-pulse">
           <div className="w-2.5 h-2.5 rounded-full bg-white" />
-          {INCIDENTS.filter((i) => i.severity === "critical").length} CRITICAL INCIDENTS
+          {incidents.filter((i) => i.severity === "critical" && i.status !== "resolved").length} CRITICAL INCIDENTS
         </div>
       </div>
 
       <div className="flex flex-col gap-3.5">
-        {INCIDENTS.map((incident) => (
+        {incidents.map((incident) => (
           <Link key={incident.id} href={`/control-room/incidents/${incident.id}`}>
             <div className={`p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row justify-between items-start gap-4 fan-shadow hover:scale-[1.008] active:scale-[0.995] ${
               incident.severity === "critical"

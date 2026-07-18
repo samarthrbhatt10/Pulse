@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     if (apiKey && apiKey !== "your-gemini-api-key-here") {
       try {
         const ai = new GoogleGenAI({ apiKey });
-        const prompt = `You are the PULSE Official FIFA 2026 Multilingual Neural Broadcaster.
+        const prompt = `You are the PULSE Official Multilingual Neural Broadcaster.
 Translate the following English master stadium announcement into exact, native, high-urgency operational phrasing for the requested target languages: ${targetLangs.join(", ")}.
 Context: ${context}.
 English Message: "${text}"
@@ -92,7 +92,7 @@ function getNeuralTranslations(text: string, targetLangs: string[]): Record<stri
       } else if (lower.includes("water") || lower.includes("cooling") || lower.includes("chilled")) {
         result.es = "💧 **Zonas de Refresco:** Las estaciones de agua fría gratuita y zonas de climatización están activas en las Explanadas B y C.";
       } else {
-        result.es = `📢 [Anuncio Oficial FIFA]: ${text} (Traducción al Español verificada por el Comando Central).`;
+        result.es = `📢 [Anuncio Oficial del Estadio]: ${text} (Traducción al Español verificada por el Comando Central).`;
       }
     } else if (lang === "fr") {
       if (lower.includes("zone a") || lower.includes("congested") || lower.includes("density")) {
@@ -104,7 +104,7 @@ function getNeuralTranslations(text: string, targetLangs: string[]): Record<stri
       } else if (lower.includes("water") || lower.includes("cooling") || lower.includes("chilled")) {
         result.fr = "💧 **Points de Fraîcheur:** Des fontaines d'eau fraîche gratuites et des zones climatisées sont actives dans les Halls B et C.";
       } else {
-        result.fr = `📢 [Annonce Officielle FIFA]: ${text} (Traduction en Français certifiée par la Salle de Contrôle).`;
+        result.fr = `📢 [Annonce Officielle du Stade]: ${text} (Traduction en Français certifiée par la Salle de Contrôle).`;
       }
     } else if (lang === "hi") {
       if (lower.includes("zone a") || lower.includes("congested") || lower.includes("density")) {
@@ -116,7 +116,7 @@ function getNeuralTranslations(text: string, targetLangs: string[]): Record<stri
       } else if (lower.includes("water") || lower.includes("cooling") || lower.includes("chilled")) {
         result.hi = "💧 **शीतल जल सुविधा:** निःशुल्क ठंडे पानी के स्टेशन और कूलिंग ज़ोन कॉनकोर्स B और C पर सक्रिय हैं।";
       } else {
-        result.hi = `📢 [फीफा आधिकारिक घोषणा]: ${text} (सेंट्रल कमांड द्वारा प्रमाणित हिंदी अनुवाद)।`;
+        result.hi = `📢 [स्टेडियम आधिकारिक घोषणा]: ${text} (सेंट्रल कमांड द्वारा प्रमाणित हिंदी अनुवाद)।`;
       }
     } else if (lang === "ar") {
       if (lower.includes("zone a") || lower.includes("congested") || lower.includes("density")) {
@@ -128,7 +128,7 @@ function getNeuralTranslations(text: string, targetLangs: string[]): Record<stri
       } else if (lower.includes("water") || lower.includes("cooling") || lower.includes("chilled")) {
         result.ar = "💧 **محطات مياه مبردة:** محطات مياه الشرب الباردة المجانية ومناطق التبريد متاحة الآن وعاملة في الممر العُلوي B و C.";
       } else {
-        result.ar = `📢 [إعلان فيفا الرسمي]: ${text} (ترجمة معتمدة لغرفة التحكم المركزية).`;
+        result.ar = `📢 [إعلان الملعب الرسمي]: ${text} (ترجمة معتمدة لغرفة التحكم المركزية).`;
       }
     } else if (lang === "pt") {
       if (lower.includes("zone a") || lower.includes("congested") || lower.includes("density")) {
@@ -140,7 +140,7 @@ function getNeuralTranslations(text: string, targetLangs: string[]): Record<stri
       } else if (lower.includes("water") || lower.includes("cooling") || lower.includes("chilled")) {
         result.pt = "💧 **Estações de Refresco:** Estações de água gelada gratuita e zonas de climatização estão ativas nos Saguões B e C.";
       } else {
-        result.pt = `📢 [Anúncio Oficial FIFA]: ${text} (Tradução em Português verificada pela Central de Operações).`;
+        result.pt = `📢 [Anúncio Oficial do Estádio]: ${text} (Tradução em Português verificada pela Central de Operações).`;
       }
     }
   }

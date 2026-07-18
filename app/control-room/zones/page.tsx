@@ -1,7 +1,9 @@
 "use client";
 import { ZONES, densityColor } from "@/lib/mockData";
+import { usePulseSync } from "@/lib/usePulseSync";
 
 export default function ZonesPage() {
+  const { zones } = usePulseSync();
   return (
     <div className="min-h-[calc(100vh-4rem)] p-4 sm:p-8 max-w-6xl mx-auto">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
@@ -21,7 +23,7 @@ export default function ZonesPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {ZONES.map((zone) => (
+        {zones.map((zone) => (
           <div key={zone.id} className="bg-card border border-border rounded-2xl p-5 fan-shadow hover:border-primary/50 transition-all flex flex-col justify-between">
             <div>
               <div className="flex items-start justify-between mb-3">

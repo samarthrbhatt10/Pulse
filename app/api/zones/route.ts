@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { getZonesFromDb } from "@/lib/firestore/db";
+import { NextRequest, NextResponse } from "next/server";
+import { getZonesFromDb, updateZoneInDb } from "@/lib/firestore/db";
 
 export async function GET() {
   const rawZones = await getZonesFromDb();
@@ -20,4 +20,20 @@ export async function GET() {
     totalCapacity,
     timestamp: new Date().toISOString(),
   });
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json().catch(() => ({}));
+    const { zoneId, updates } = body;
+
+    if (zoneId && updates) {
+      await updateZoneInDb(zoneId, updates);
+    }
+
+    const updatedZones = await getZonesFromDb();
+    return NextResponse.json({ success: true, zones: updatedZones });
+  } catch (err) {
+    return NextResponse.json({ success: false, error: String(err) }, { status: 500 });
+  }
 }

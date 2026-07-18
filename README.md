@@ -30,9 +30,9 @@ When turnstile queues bottleneck or sector temperatures spike, PULSE does not ju
 ### 1.  Interactive 3D/Isometric Digital Twin Engine (`components/Stadium3DEngine.tsx`)
 * **Custom 60 FPS WebGL/Canvas Rendering Pipeline**: Zero-dependency mathematical 3D projection engine (`x, y, z` → `screenX, screenY` with dynamic quaternion/Euler angle rotation).
 * **360° Drag-to-Rotate & Zoom Controls**: Orbit smoothly around flagship venues:
-  * **Estadio Azteca** *(Mexico City — Opening & Final Venue · Capacity: 87,523)*
-  * **MetLife Stadium** *(New York / New Jersey — Semifinal Venue · Capacity: 82,500)*
-  * **SoFi Stadium** *(Los Angeles — Quarterfinal Venue · Capacity: 70,240)*
+  * **Dallas Stadium** *(Dallas, TX — Semifinal & Final Venue · Capacity: 94,000)*
+  * **Mexico City Stadium** *(Mexico City — Opening Match Venue · Capacity: 87,523)*
+  * **New York New Jersey Stadium** *(New York / New Jersey — Semifinal Venue · Capacity: 82,500)*
 * **Multi-Layer Telemetry Switching**:
   * `[  3D Digital Twin ]`: Renders pitch geometry, volumetric seating bowls, structural roof trusses, and active gate nodes.
   * `[  Crowd Heatmap ]`: Projects real-time thermal concourse gradients (`#10b981` optimal → `#ef4444` critical hot zones).

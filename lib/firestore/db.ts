@@ -147,37 +147,51 @@ export async function seedFirestoreIfEmpty(): Promise<boolean> {
 }
 
 /**
- * Update zone in Firestore.
+ * Update zone in Firestore and in-memory state.
  */
 export async function updateZoneInDb(zoneId: string, updates: Partial<Zone>): Promise<void> {
+  const target = ZONES.find((z) => z.id.toUpperCase() === zoneId.toUpperCase());
+  if (target) {
+    Object.assign(target, updates);
+  }
   try {
     const zoneDoc = doc(db, COLLECTIONS.ZONES, zoneId);
     await updateDoc(zoneDoc, updates);
   } catch (err) {
-    console.warn(`[Firestore] Failed to update zone ${zoneId}:`, err);
+    console.warn(`[Firestore] Local/fallback update zone ${zoneId}`);
   }
 }
 
 /**
- * Update gate in Firestore.
+ * Update gate in Firestore and in-memory state.
  */
 export async function updateGateInDb(gateId: string, updates: Partial<Gate>): Promise<void> {
+  const target = INITIAL_GATES.find((g) => g.id === gateId);
+  if (target) {
+    Object.assign(target, updates);
+  }
   try {
     const gateDoc = doc(db, COLLECTIONS.GATES, gateId);
     await updateDoc(gateDoc, updates);
   } catch (err) {
-    console.warn(`[Firestore] Failed to update gate ${gateId}:`, err);
+    console.warn(`[Firestore] Local/fallback update gate ${gateId}`);
   }
 }
 
 /**
- * Create or update an incident in Firestore.
+ * Create or update an incident in Firestore and in-memory state.
  */
 export async function saveIncidentToDb(incident: Incident): Promise<void> {
+  const idx = INCIDENTS.findIndex((i) => i.id === incident.id);
+  if (idx >= 0) {
+    Object.assign(INCIDENTS[idx], incident);
+  } else {
+    INCIDENTS.unshift(incident);
+  }
   try {
     const incDoc = doc(db, COLLECTIONS.INCIDENTS, incident.id);
     await setDoc(incDoc, incident, { merge: true });
   } catch (err) {
-    console.warn(`[Firestore] Failed to save incident ${incident.id}:`, err);
+    console.warn(`[Firestore] Local/fallback save incident ${incident.id}`);
   }
 }

@@ -69,7 +69,7 @@ export default function LoginPage() {
             Enterprise Portal Login
           </h1>
           <p className="text-xs text-muted-foreground font-semibold mt-1">
-            Sign in with your FIFA 2026 World Cup command credentials
+            Sign in with your stadium operations command credentials
           </p>
         </div>
 
@@ -124,7 +124,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="text-xs font-black uppercase tracking-wider text-foreground block mb-1.5">
-              Work Email / FIFA ID
+              Work Email / Operator ID
             </label>
             <div className="relative">
               <span className="material-symbols-outlined absolute left-3.5 top-3 text-muted-foreground text-[18px]">

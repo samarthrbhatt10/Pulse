@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { INCIDENTS, Incident } from "@/lib/mockData";
+import { usePulseSync } from "@/lib/usePulseSync";
 
 function StreamingText({ text, onComplete }: { text: string; onComplete?: () => void }) {
   const [displayed, setDisplayed] = useState("");
@@ -70,10 +71,11 @@ export default function IncidentDetailPage() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
-  const incident = INCIDENTS.find((i) => i.id === id) ?? INCIDENTS[0];
+  const { incidents, resolveIncident } = usePulseSync();
+  const incident = incidents.find((i) => i.id === id) ?? INCIDENTS[0];
   const [streamDone, setStreamDone] = useState(false);
   const [dispatching, setDispatching] = useState(false);
-  const [dispatched, setDispatched] = useState(incident.status === "dispatched");
+  const [dispatched, setDispatched] = useState(incident.status === "dispatched" || incident.status === "resolved");
 
   const severityClass = {
     critical: { badge: "bg-red-600 text-white", border: "border-red-500/50", icon: "text-red-500" },
@@ -91,7 +93,8 @@ export default function IncidentDetailPage() {
 
   async function handleDispatch() {
     setDispatching(true);
-    await new Promise((r) => setTimeout(r, 1500));
+    await resolveIncident(incident.id);
+    await new Promise((r) => setTimeout(r, 600));
     setDispatched(true);
     setDispatching(false);
   }
