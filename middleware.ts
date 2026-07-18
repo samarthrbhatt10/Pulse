@@ -9,8 +9,8 @@ export function middleware(request: NextRequest) {
     const roleCookie = request.cookies.get('pulse_user_role');
     const role = roleCookie?.value;
 
-    // If role is 'fan' (or if no role cookie / non-ops/security role), redirect to login with unauthorized error
-    if (role === 'fan') {
+    // Default behavior: block unless a valid staff session cookie ('ops' or 'security') is explicitly present
+    if (!role || (role !== 'ops' && role !== 'security')) {
       return NextResponse.redirect(new URL('/login?error=unauthorized_access', request.url));
     }
   }
