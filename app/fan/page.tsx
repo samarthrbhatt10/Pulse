@@ -134,7 +134,7 @@ export default function FanHomePage() {
             <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-black uppercase tracking-wider">
-                  ★ FIFA WORLD CUP 2026™ PASS
+                  ★ GLOBAL TOURNAMENT 2026 PASS
                 </span>
               </div>
               <span className="text-xs font-mono font-bold text-slate-300">DALLAS STADIUM</span>
@@ -315,7 +315,7 @@ export default function FanHomePage() {
               </div>
               <div className="my-auto text-center font-mono opacity-60 text-[11px]">3D volumetric player tracking active</div>
               <div className="text-[10px] text-slate-400 font-bold flex justify-between">
-                <span>Hawk-Eye Optical</span>
+                <span>Optical Tracking Matrix</span>
                 <span className="text-emerald-400">SYNCED ✅</span>
               </div>
             </div>
@@ -558,7 +558,7 @@ export default function FanHomePage() {
             </div>
 
             <h3 className="text-xl font-black text-foreground">DALLAS STADIUM</h3>
-            <p className="text-xs text-muted-foreground font-semibold">FIFA WORLD CUP 2026™ · SEMIFINAL</p>
+            <p className="text-xs text-muted-foreground font-semibold">GLOBAL TOURNAMENT 2026 · SEMIFINAL</p>
 
             <div className="my-5 p-4 rounded-2xl bg-gradient-to-br from-slate-900 to-indigo-950 text-white border border-slate-700 space-y-3">
               <div className="grid grid-cols-3 gap-2 text-center border-b border-white/10 pb-3 font-mono">

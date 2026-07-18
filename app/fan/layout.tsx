@@ -32,6 +32,7 @@ export default function FanLayout({ children }: { children: React.ReactNode }) {
     if (typeof window !== "undefined") {
       localStorage.removeItem("pulse_user_role");
       localStorage.removeItem("pulse_user_name");
+      document.cookie = "pulse_user_role=; path=/; max-age=0";
     }
     router.push("/login");
   };

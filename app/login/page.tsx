@@ -1,11 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const unauthorized = searchParams?.get("error") === "unauthorized_access";
   const [email, setEmail] = useState("cto.ops@pulse-stadium.ai");
   const [password, setPassword] = useState("••••••••••••••••");
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,7 @@ export default function LoginPage() {
     if (typeof window !== "undefined") {
       localStorage.setItem("pulse_auth_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
       localStorage.setItem("pulse_user_role", selectedRole);
+      document.cookie = `pulse_user_role=${selectedRole}; path=/; max-age=86400`;
     }
     if (selectedRole === "fan") {
       router.push("/fan");
@@ -34,6 +37,7 @@ export default function LoginPage() {
     setTimeout(() => {
       if (typeof window !== "undefined") {
         localStorage.setItem("pulse_user_role", role);
+        document.cookie = `pulse_user_role=${role}; path=/; max-age=86400`;
       }
       if (role === "fan") router.push("/fan");
       else if (role === "security") router.push("/control-room/incidents");
@@ -61,6 +65,12 @@ export default function LoginPage() {
       {/* Login Card */}
       <div className="w-full max-w-md bg-card/90 backdrop-blur-2xl border border-border rounded-3xl p-6 sm:p-8 fan-shadow relative z-10 my-12">
         <div className="text-center mb-6">
+          {unauthorized && (
+            <div className="mb-4 p-3 rounded-xl bg-red-500/15 border border-red-500/40 text-red-500 text-xs font-bold flex items-center justify-center gap-2">
+              <span className="material-symbols-outlined text-sm">block</span>
+              <span>Unauthorized: Fan role cannot access Control Room server-side.</span>
+            </div>
+          )}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/15 text-primary text-[10px] font-black uppercase tracking-widest mb-3 border border-primary/20">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
             Silicon Valley Enterprise SSO
@@ -191,5 +201,13 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <LoginContent />
+    </Suspense>
   );
 }

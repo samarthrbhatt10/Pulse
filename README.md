@@ -1,184 +1,128 @@
-<div align="center">
+# PULSE — Predictive Unified Live Stadium Experience
 
-# PULSE — Autonomous Neural Operations & 3D Digital Twin Core
-### The Next-Generation Level 5 Command & Control Suite for World-Class Stadiums & Mega-Events (FIFA 2026™ Flagship)
+### A GenAI-Enabled Smart Stadium Operations Platform
+*Built for PromptWars Virtual 2026 — Main Challenge 4: Smart Stadiums & Tournament Operations*
 
 [![Vercel Deployment](https://img.shields.io/badge/Vercel_Production-LIVE-00C16E?style=for-the-badge&logo=vercel&logoColor=white)](https://pulse-five-jet.vercel.app)
-[![Next.js 16](https://img.shields.io/badge/Next.js_16-Turbopack-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
-[![Google Gemini 2.5](https://img.shields.io/badge/Gemini_2.5_Flash-Agentic_AI-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
+[![Next.js](https://img.shields.io/badge/Next.js_16-Turbopack-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Gemini 2.5](https://img.shields.io/badge/Gemini_2.5_Flash-Agentic_AI-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-[ **Live Production Demo**](https://pulse-five-jet.vercel.app) · [ **System Architecture**](#-system-architecture--data-flow) · [ **Command Modules**](#-core-architectural-pillars--command-modules) · [ **Quickstart Guide**](#️-local-development--setup)
-
----
-
-</div>
-
-## Executive Summary:
-
-Modern mega-event operations (including the **FIFA World Cup 2026™**) face a multi-billion-dollar infrastructure challenge: managing **80,000+ attendees**, **1,200+ IoT sensor nodes**, **biometric express turnstiles**, and **complex crowd dynamics** using disconnected, legacy systems. Walkie-talkies, static 2D spreadsheets, and siloed CCTV rooms create latency bottlenecks where critical response times average over 12 minutes.
-
-**PULSE™** is built to bridge this operational gap. Engineered from the ground up as a **Level 5 Autonomous Command & Control Suite**, PULSE merges real-time edge telemetry with an interactive **3D WebGL/Canvas Digital Twin** and an autonomous **Google Gemini 2.5 Flash Agentic Core**. 
-
-When turnstile queues bottleneck or sector temperatures spike, PULSE does not just show a warning alarm—it autonomously calculates spatial physics, suggests physical crowd rerouting interventions, translates multi-lingual PA broadcasts in real time, and executes preventative actions in **under 15 milliseconds**.
+[**Live Demo**](https://pulse-five-jet.vercel.app) · [**Architecture**](#architecture) · [**Modules**](#core-modules) · [**Setup**](#local-development)
 
 ---
 
-##  Core Architectural Pillars & Command Modules
+## Overview
 
-### 1.  Interactive 3D/Isometric Digital Twin Engine (`components/Stadium3DEngine.tsx`)
-* **Custom 60 FPS WebGL/Canvas Rendering Pipeline**: Zero-dependency mathematical 3D projection engine (`x, y, z` → `screenX, screenY` with dynamic quaternion/Euler angle rotation).
-* **360° Drag-to-Rotate & Zoom Controls**: Orbit smoothly around flagship venues:
-  * **Dallas Stadium** *(Dallas, TX — Semifinal & Final Venue · Capacity: 94,000)*
-  * **Mexico City Stadium** *(Mexico City — Opening Match Venue · Capacity: 87,523)*
-  * **New York New Jersey Stadium** *(New York / New Jersey — Semifinal Venue · Capacity: 82,500)*
-* **Multi-Layer Telemetry Switching**:
-  * `[  3D Digital Twin ]`: Renders pitch geometry, volumetric seating bowls, structural roof trusses, and active gate nodes.
-  * `[  Crowd Heatmap ]`: Projects real-time thermal concourse gradients (`#10b981` optimal → `#ef4444` critical hot zones).
-  * `[  Turnstile Inflow ]`: Isolates perimeter gates and highlights glowing concourse particle paths (`4,820 fans/min` velocity).
-  * `[  Optical AR Matrix ]`: Renders 4K surveillance cones across turnstile queues, palcos suites, and pitch perimeters.
+Large tournament venues coordinate crowd flow, wayfinding, incident response, and multilingual communication across disconnected legacy tools — radios, static maps, siloed CCTV. **PULSE** is a single GenAI reasoning agent (Google Gemini 2.5 Flash, real function-calling — not a wrapped chatbot) that acts across four connected operational tracks, built for organizers, on-ground staff, and fans alike.
+
+This is a hackathon prototype built for a defined challenge scope, using simulated live telemetry rather than real stadium hardware integrations. That descope is intentional and explained in the architecture section below — not a limitation we're hiding.
 
 ---
 
-### 2.  Autonomous Gemini 2.5 Flash AI Triage & Rerouting
-* **Real-Time Spatial Anomaly Detection**: Actively monitors turnstile throughput (`G01 — G12`) and sector capacities (`SEC-A through SEC-D`).
-* **One-Click Autonomous Intervention**: When concourse pressure exceeds safe thresholds (>90%), the Neural Agent generates an actionable physical protocol:
-  > *"High density threshold detected in North Plaza Bowl (SEC-A). Autonomous AI suggests diverting 350 fans from Gate 4 to Gate 6 NFC Express Portal and boosting concourse HVAC by +15%."*
-* **Immediate Telemetry Resolution**: Executing the protocol updates live gate velocities and normalizes concourse heat indices in real time.
+## Core Modules
+
+### 1. Dynamic Crowd Management
+Live zone-occupancy visualization (2D heatmap + an interactive 3D spatial view of the venue) driven by simulated sensor telemetry. The Gemini agent reasons over live density and forecasted trends to proactively recommend gate rerouting — not a static rule, a live decision generated per situation.
+
+### 2. Smart Indoor Navigation
+Conversational, multilingual wayfinding across a custom digital floor-plan. The agent finds paths, locates amenities, and — critically — factors in live crowd density before recommending a route, so "nearest restroom" actually means nearest *reachable without walking through a congested concourse*.
+
+### 3. Real-Time Decision Support
+A control-room copilot for organizers: live incident queue, AI-generated response recommendations that fuse incident data with crowd and navigation context, and a fan-facing SOS beacon so attendees can report incidents directly into the same triage pipeline staff use. Every AI recommendation is shown with its full reasoning trace — which tools it called and why — so the decision is auditable, not a black box.
+
+### 4. Multi-Language Assistance
+Real generative translation (not static UI strings) across announcements, navigation directions, and fan chat, with browser-native speech synthesis for PA-style audio broadcasts in multiple languages simultaneously.
 
 ---
 
-### 3.  Professional FIFA Match Analyst & Tactical Hawk-Eye Array
-Built directly into the main **Control Room Dashboard (`/control-room`)**, providing tournament directors with real-time tactical intelligence:
-* **Expected Goals (`xG`) & Momentum**: Tracks statistical probability curves (`MEX 1.84 — 2.12 ARG` with `MEX +0.32 above forecast`).
-* **Field Tilt & Possession Dynamics**: Monitors territorial dominance (`MEX 48% | ARG 52%` · `Tilt: +14% ARG`).
-* **Optical Ball Tracking & Turf Sensors**: Measures real-time ball velocity (`58.4 km/h Avg`), pitch humidity (`42% Optimal`), and wind velocity (`14 km/h NW`).
-* **Acoustic Roar Index**: Pings live stadium decibel surges (`94.8 dB Peak Roar` during goals).
+## Portals
+
+| Portal | Path | Audience | Capabilities |
+|---|---|---|---|
+| **Control Room** | `/control-room/*` | Organizers, security, on-ground staff | Live zone view, incident dispatch, AI recommendations + trace, multilingual broadcast composer |
+| **Fan Portal** | `/fan/*` | Attendees | Conversational navigation, live crowd transparency, multilingual chat, SOS reporting |
+
+Access to each portal is role-gated. **Current implementation note:** role checks currently run client-side (`localStorage`-based); this is flagged as a pre-submission hardening item — see Known Limitations below — since it doesn't meet the bar for genuine access control.
 
 ---
 
-### 4.  Neural PA Broadcast & 6-Language Real-Time Speech AI (`/control-room/broadcast`)
-* **Multi-Lingual Emergency & Operational Broadcasts**: Translates live announcements instantly across **English**, **Spanish**, **French**, **Portuguese**, **Arabic**, and **Japanese**.
-* **Browser Speech Synthesis Engine**: Leverages native `window.speechSynthesis` and high-fidelity neural voices (`Google US English`, `Microsoft Helena`, etc.) to broadcast acoustic alerts across concourse zones.
-* **Pre-Built Scenario Presets**: Instant one-click dispatch for *Crowd Dispersal*, *Lost Child Protocols*, *VIP Arrivals*, and *Weather Evacuations*.
+## Architecture
 
----
-
-### 5.  Enterprise RBAC Security & Dual-Portal Ecosystem
-PULSE enforces strict role-based access control across two distinct operating environments:
-
-| Portal | Path | Target Audience | Key Capabilities |
-| :--- | :--- | :--- | :--- |
-| **🚨 Control Room** | `/control-room/*` | CTO, COO, Security Chiefs, Match Analysts | 3D Digital Twin, Incident Dispatch, AI Reroute Protocols, Neural PA Broadcasts, Zone Telemetry |
-| **🎟️ Fan Portal** | `/fan/*` | Stadium Attendees, VIP Ticket Holders | Interactive Concourse Navigation, AI Concierge Chat, In-Seat F&B Express Order, SOS Emergency Beacon |
-
-> **Security Intercept**: Any user with role `"fan"` attempting to access `/control-room` is automatically intercepted by the `ControlRoomLayout` RBAC boundary and redirected to `/fan` (and vice versa).
-
----
-
-##  System Architecture & Data Flow
-
-```mermaid
-graph TD
-    subgraph Edge & Sensor Layer [Edge IoT & Telemetry Nodes]
-        IoT[1,204 Edge Sensor Nodes] -->|Inflow / Temp / Decibel| CoreAPI[Next.js 16 Edge API Routes]
-        CCTV[Optical AR / CCTV Feeds] -->|Queue Density Bounding| CoreAPI
-        Biometric[NFC Wallet & Biometric Turnstiles] -->|Throughput Rate| CoreAPI
-    end
-
-    subgraph Neural Core [PULSE™ Serverless Intelligence Core]
-        CoreAPI -->|State Synchronization| Store[In-Memory & Firestore State]
-        CoreAPI -->|Neural Context| Gemini[Google Gemini 2.5 Flash Agentic Core]
-        Gemini -->|Autonomous Reroute & Rationale| CoreAPI
-        Gemini -->|Multi-Lang Translations| CoreAPI
-    end
-
-    subgraph Client Layer [Frontend Presentation & 3D Canvas Engine]
-        Store -->|State & Telemetry| CTO[/control-room : CTO & COO Command/]
-        Store -->|Fan Context| Fan[/fan : Attendee Portal/]
-        CTO -->|WebGL Projection| Canvas3D[Stadium3DEngine 60 FPS Canvas]
-        CTO -->|Speech API| PA[Neural Audio Broadcast Engine]
-    end
+```
+        Gemini 2.5 Flash Agent (real function-calling loop)
+                          |
+      -------------------------------------------
+      |            |             |               |
+  crowd.*        nav.*         ops.*          lang.*
+  tools          tools         tools          tools
+      |            |             |               |
+      -------------------------------------------
+                          |
+                     Firestore
+                  (single source of truth)
+                          ^
+                          |
+             Stadium Data Simulator
+        (scheduled function, synthetic but
+         internally consistent telemetry)
 ```
 
+One agent, four tool families, shared state. This is deliberate: it demonstrates a single reasoning core routing across operational domains, rather than four disconnected feature demos.
+
+**What's simulated vs. real:** zone occupancy, gate throughput, and incidents are generated by a scheduled data simulator rather than real IoT/turnstile hardware — there's no such hardware available to a hackathon team. Every AI reasoning step, tool call, translation, and recommendation is real and live against that simulated data. The scaling path from simulator to real sensor ingestion is documented in the architecture spec (`docs/01_ARCHITECTURE.md`).
+
 ---
 
-## 🛠️ Local Development & Setup
+## Known Limitations (stated up front, not discovered by a judge)
+
+- Role-based access control is currently client-side only and needs server-side session verification before this would be safe for real deployment.
+- Indoor navigation uses a hand-built digital floor-plan for one sample venue level, not a licensed indoor-positioning integration.
+- Telemetry is simulated, not sourced from real stadium hardware.
+- Performance figures are not yet load-tested; no benchmark numbers are published until they're measured and reproducible.
+
+---
+
+## Local Development
 
 ### Prerequisites
-* **Node.js** `v20.x` or higher
-* **npm** `v10.x` (or `pnpm` / `yarn`)
-* **Google Gemini API Key** (Get yours free at [Google AI Studio](https://aistudio.google.com/))
+- Node.js v20+, npm v10+
+- A Google Gemini API key ([Google AI Studio](https://aistudio.google.com/))
+- A Firebase project (Firestore, Standard edition)
 
-### 1. Clone & Install
+### Setup
 ```bash
 git clone https://github.com/samarthrbhatt10/Pulse.git
 cd Pulse
 npm install
-```
-
-### 2. Configure Environment Variables
-Create a `.env.local` file in the project root by copying the template:
-```bash
 cp .env.example .env.local
 ```
-Add your Gemini credentials in `.env.local`:
-```env
-# Required: Google Gemini 2.5 Flash API Key for Autonomous Agent & Translations
-GEMINI_API_KEY="AIzaSy..."
 
-# Optional: Firebase credentials for persistent cloud state
-NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSy..."
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="pulse-enterprise.firebaseapp.com"
-NEXT_PUBLIC_FIREBASE_PROJECT_ID="pulse-enterprise"
+Fill in `.env.local`:
+```
+GEMINI_API_KEY=your-gemini-api-key
+NEXT_PUBLIC_FIREBASE_API_KEY=your-firebase-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
 ```
 
-### 3. Launch Development Server
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser. 
-* To log in as **CTO / COO / Security Officer**: Select **`[ Login as Officer ]`** or navigate to `/login` and choose the **Control Room Officer** role.
-* To log in as an **Attendee**: Select **`[ Login as Fan ]`** or navigate to `/login` and choose the **Fan / Attendee** role.
+Open `http://localhost:3000`. Choose "Control Room" or "Fan" at `/login` to explore each portal.
 
 ---
 
-##  Production Deployment (Vercel Edge Network)
+## Technology Stack
 
-PULSE is optimized for zero-configuration deployment on **Vercel**:
-
-```bash
-# Install Vercel CLI globally (if not installed)
-npm i -g vercel
-
-# Deploy to Edge Network
-vercel --prod
-```
-
-### Verified Production Metrics (`next build`)
-* **Compiled Pages**: 24/24 static & dynamic routes generated in `< 1.5s`.
-* **3D Canvas FPS**: Stable `60 FPS` with `< 4ms` frame render overhead.
-* **API Latency**: `< 15ms` edge route response time for simulation sync.
+| Layer | Technologies |
+|---|---|
+| Framework | Next.js (App Router), React, TypeScript |
+| Styling | Tailwind CSS, custom glassmorphic design system |
+| 3D/Visualization | Custom Canvas-based spatial rendering |
+| AI | Google Gemini 2.5 Flash — real function-calling agent loop |
+| Data | Firebase Firestore, Cloud Functions (data simulator) |
 
 ---
 
-##  Technology Stack Specifications
-
-| Layer | Technologies & Frameworks |
-| :--- | :--- |
-| **Core Framework** | Next.js 16 (App Router, Server Actions, Turbopack), React 19, TypeScript 5 |
-| **Styling & Design** | Vanilla CSS Tokens (`globals.css`), Tailwind CSS 4, Glassmorphism UI, Dark Mode Theme Engine |
-| **3D & Graphics** | HTML5 Canvas / WebGL Custom Projection Engine (`components/Stadium3DEngine.tsx`), SVG Animations |
-| **AI & Neural Engine** | Google Gemini 2.5 Flash (`@google/genai`), Web Speech API (`window.speechSynthesis`) |
-| **State & Storage** | React State/Context, `localStorage` RBAC Session Tokens, Firebase / Firestore SDK (`lib/firestore`) |
-| **Security & Compliance** | Path-based Route Protection (`app/control-room/layout.tsx`), Trademark & Copyright Compliance Network |
-
----
-
-<div align="center">
-
-**Engineered with precision for World-Class Stadium Operations & Enterprise Sports Tech Leadership.**  
-*PULSE™ · Copyright © 2026 Enterprise Tournament Solutions. All rights reserved.*
-
-</div>
+*Built by Samarth Bhatt for PromptWars Virtual 2026, Main Challenge 4.*

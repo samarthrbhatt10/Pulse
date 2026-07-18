@@ -19,6 +19,7 @@ export default function SignupPage() {
     if (typeof window !== "undefined") {
       localStorage.setItem("pulse_user_role", roleType);
       localStorage.setItem("pulse_user_name", name || "Enterprise Officer");
+      document.cookie = `pulse_user_role=${roleType}; path=/; max-age=86400`;
     }
     if (roleType === "fan") {
       router.push("/fan");
