@@ -1,4 +1,4 @@
-# PULSE — Predictive Unified Live Stadium Experience
+# PULSE — GenAI-Enabled Predictive Unified Live Stadium Experience
 
 ### A GenAI-Enabled Smart Stadium Operations Platform
 *Built for PromptWars Virtual 2026 — Main Challenge 4: Smart Stadiums & Tournament Operations*
