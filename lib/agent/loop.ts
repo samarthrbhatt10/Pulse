@@ -268,7 +268,7 @@ function translateNeural(text: string, targetLang: string): string {
 }
 
 // ===== Tool execution against mock data =====
-function executeTool(toolName: string, args: Record<string, unknown>): unknown {
+export function executeTool(toolName: string, args: Record<string, unknown>): unknown {
   switch (toolName) {
     case "crowd__getZoneDensity": {
       const zoneId = args.zoneId as string | undefined;
