@@ -12,6 +12,7 @@ export const COLLECTIONS = {
   AGENT_TRACES: "agentTraces",
   USERS: "users",
   BROADCASTS: "broadcasts",
+  TICKETS: "tickets",
 } as const;
 
 // 1. Gate Interface & Converter
@@ -239,6 +240,39 @@ export const broadcastConverter: FirestoreDataConverter<BroadcastMessage> = {
       translations: data.translations ?? {},
       sentAt: data.sentAt ?? new Date().toISOString(),
       languages: data.languages ?? ["en"],
+    };
+  },
+};
+
+// 8. Ticket Interface & Converter
+export interface Ticket {
+  id?: string;
+  valid: boolean;
+  used: boolean;
+  matchName: string;
+  seat: string;
+  usedByUid: string | null;
+}
+
+export const ticketConverter: FirestoreDataConverter<Ticket> = {
+  toFirestore(ticket: Ticket): DocumentData {
+    return {
+      valid: ticket.valid,
+      used: ticket.used,
+      matchName: ticket.matchName,
+      seat: ticket.seat,
+      usedByUid: ticket.usedByUid ?? null,
+    };
+  },
+  fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Ticket {
+    const data = snapshot.data(options)!;
+    return {
+      id: snapshot.id,
+      valid: data.valid ?? true,
+      used: data.used ?? false,
+      matchName: data.matchName ?? "GLOBAL TOURNAMENT 2026 · SEMIFINAL",
+      seat: data.seat ?? "Section 108, Row 12, Seat 14",
+      usedByUid: data.usedByUid ?? null,
     };
   },
 };

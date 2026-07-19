@@ -3,7 +3,16 @@ import { db } from "../firebase";
 import { COLLECTIONS } from "./schema";
 import { ZONES, INCIDENTS } from "../mockData";
 import { collection, getDocs, doc, setDoc } from "firebase/firestore";
-import { Gate, VenueNode, VenueEdge, Amenity } from "./schema";
+import { Gate, VenueNode, VenueEdge, Amenity, Ticket } from "./schema";
+
+export const INITIAL_TICKETS: Ticket[] = Array.from({ length: 20 }, (_, i) => ({
+  id: `WC26-DAL-00${140 + i}`,
+  valid: true,
+  used: false,
+  matchName: "GLOBAL TOURNAMENT 2026 · SEMIFINAL",
+  seat: `Section ${101 + (i % 8)}, Row ${1 + Math.floor(i / 4)}, Seat ${10 + i}`,
+  usedByUid: null,
+}));
 
 export const INITIAL_GATES: Gate[] = [
   { id: "gate_1", name: "Gate 1 - North Plaza", entryRatePerMin: 180, queueEstimate: 4, connectedZoneId: "zone_a", status: "active" },
@@ -147,8 +156,20 @@ export async function runFullDatabaseSeed(): Promise<{ success: boolean; stats: 
       stats.incidents = incidentsSnap.size;
     }
 
+    // 7. TICKETS
+    const ticketsSnap = await getDocs(collection(db, COLLECTIONS.TICKETS));
+    if (ticketsSnap.empty) {
+      for (const ticket of INITIAL_TICKETS) {
+        const docId = ticket.id!;
+        await setDoc(doc(db, COLLECTIONS.TICKETS, docId), { ...ticket, id: docId });
+      }
+      stats.tickets = INITIAL_TICKETS.length;
+    } else {
+      stats.tickets = ticketsSnap.size;
+    }
+
     console.info("[Firestore Seed] Full database seed complete:", stats);
-    return { success: true, stats, message: "All 6 Firestore collections seeded successfully." };
+    return { success: true, stats, message: "All 7 Firestore collections seeded successfully." };
   } catch (error) {
     console.error("[Firestore Seed] Seeding error:", error);
     return { success: false, stats: {}, message: `Seeding error: ${String(error)}` };

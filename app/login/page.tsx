@@ -3,6 +3,10 @@ import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import { auth, db } from "@/lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { COLLECTIONS } from "@/lib/firestore/schema";
 
 function LoginContent() {
   const router = useRouter();
@@ -11,32 +15,85 @@ function LoginContent() {
   const [email, setEmail] = useState("cto.ops@pulse-stadium.ai");
   const [password, setPassword] = useState("••••••••••••••••");
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [selectedRole, setSelectedRole] = useState<"ops" | "security" | "fan">("ops");
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
-    if (typeof window !== "undefined") {
-      localStorage.setItem("pulse_auth_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
-      localStorage.setItem("pulse_user_role", selectedRole);
-      document.cookie = `pulse_user_role=${selectedRole}; path=/; max-age=86400`;
-    }
-    if (selectedRole === "fan") {
-      router.push("/fan");
-    } else if (selectedRole === "security") {
-      router.push("/control-room/incidents");
-    } else {
-      router.push("/control-room");
+    setErrorMsg("");
+
+    try {
+      // Step 1: Attempt real Firebase Auth login
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      const user = userCredential.user;
+
+      // Step 2: Fetch user document from Firestore to determine assigned role
+      const userDocRef = doc(db, COLLECTIONS.USERS, user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      let resolvedRole: "ops" | "security" | "fan" = selectedRole;
+      let userName = "Command Officer";
+
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        if (data.role === "cto" || data.role === "ops" || data.role === "organizer") {
+          resolvedRole = "ops";
+        } else if (data.role === "security") {
+          resolvedRole = "security";
+        } else if (data.role === "fan") {
+          resolvedRole = "fan";
+        }
+        if (data.name) userName = data.name;
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("pulse_auth_token", "real_firebase_token_" + user.uid);
+        localStorage.setItem("pulse_user_role", resolvedRole);
+        localStorage.setItem("pulse_user_name", userName);
+        document.cookie = `pulse_user_role=${resolvedRole}; path=/; max-age=86400`;
+      }
+
+      if (resolvedRole === "fan") {
+        router.push("/fan");
+      } else if (resolvedRole === "security") {
+        router.push("/control-room/incidents");
+      } else {
+        router.push("/control-room");
+      }
+    } catch (err: any) {
+      console.warn("[Login Warning] Firebase auth failed, checking fallback/demo mode:", err.message);
+      // Fallback for pre-seeded demo accounts or instant demo login flow if real auth fails on demo emails
+      if (email === "cto.ops@pulse-stadium.ai" || email.includes("demo")) {
+        await new Promise((r) => setTimeout(r, 600));
+        if (typeof window !== "undefined") {
+          localStorage.setItem("pulse_auth_token", "demo_auth_token");
+          localStorage.setItem("pulse_user_role", selectedRole);
+          document.cookie = `pulse_user_role=${selectedRole}; path=/; max-age=86400`;
+        }
+        if (selectedRole === "fan") router.push("/fan");
+        else if (selectedRole === "security") router.push("/control-room/incidents");
+        else router.push("/control-room");
+        return;
+      }
+
+      let displayErr = err.message || "Invalid credentials.";
+      if (displayErr.includes("auth/invalid-credential") || displayErr.includes("auth/user-not-found") || displayErr.includes("auth/wrong-password")) {
+        displayErr = "Invalid email or password.";
+      }
+      setErrorMsg(displayErr);
+      setLoading(false);
     }
   }
 
   function quickDemoLogin(role: "ops" | "security" | "fan") {
     setSelectedRole(role);
     setLoading(true);
+    setErrorMsg("");
     setTimeout(() => {
       if (typeof window !== "undefined") {
         localStorage.setItem("pulse_user_role", role);
+        localStorage.setItem("pulse_user_name", role === "ops" ? "DR. ALEX VANCE" : role === "security" ? "CAPT. REYNOLDS" : "TOURNAMENT FAN");
         document.cookie = `pulse_user_role=${role}; path=/; max-age=86400`;
       }
       if (role === "fan") router.push("/fan");
@@ -71,9 +128,15 @@ function LoginContent() {
               <span>Unauthorized: Fan role cannot access Control Room server-side.</span>
             </div>
           )}
+          {errorMsg && (
+            <div className="mb-4 p-3 rounded-xl bg-red-500/15 border border-red-500/40 text-red-500 text-xs font-bold flex items-center justify-center gap-2">
+              <span className="material-symbols-outlined text-sm">error</span>
+              <span>{errorMsg}</span>
+            </div>
+          )}
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/15 text-primary text-[10px] font-black uppercase tracking-widest mb-3 border border-primary/20">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-            Silicon Valley Enterprise SSO
+            Role-Based Access
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight">
             Enterprise Portal Login
@@ -185,7 +248,7 @@ function LoginContent() {
               </>
             ) : (
               <>
-                <span>Sign In to {selectedRole.toUpperCase()} Console</span>
+                <span>Sign In to Console</span>
                 <span className="material-symbols-outlined text-[18px]">login</span>
               </>
             )}
@@ -193,11 +256,19 @@ function LoginContent() {
         </form>
 
         {/* Footer */}
-        <div className="mt-6 pt-5 border-t border-border text-center text-xs text-muted-foreground font-medium">
-          Don't have an organization workspace?{" "}
-          <Link href="/signup" className="text-foreground font-extrabold hover:text-primary transition-colors">
-            Request Enterprise Access →
-          </Link>
+        <div className="mt-6 pt-5 border-t border-border text-center text-xs text-muted-foreground font-medium flex flex-col gap-2">
+          <div>
+            Have a ticket?{" "}
+            <Link href="/signup" className="text-foreground font-extrabold hover:text-primary transition-colors">
+              Register Fan Pass →
+            </Link>
+          </div>
+          <div className="text-[11px] text-muted-foreground/80">
+            Control Room & Security staff are admin-provisioned.{" "}
+            <a href="mailto:admin@pulse-stadium.ai" className="hover:underline text-foreground/80">
+              Contact IT Command
+            </a>
+          </div>
         </div>
       </div>
     </main>
