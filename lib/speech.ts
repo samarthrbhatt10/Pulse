@@ -1,4 +1,4 @@
-// PULSE — High-Fidelity Silicon Valley Neural Speech Synthesis & Acoustic Audio Engine
+// PULSE — High-Fidelity Neural Speech Synthesis & Acoustic Audio Engine
 // Provides native-level speech synthesis across English, Spanish, French, Hindi, Arabic, and Portuguese,
 // plus multi-layered Web Audio API stadium sound effects (crowd roar, goal horn, command room alert chimes).
 

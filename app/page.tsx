@@ -24,7 +24,7 @@ export default function HomePage() {
                 </span>
               </div>
               <span className="text-[10px] font-bold text-muted-foreground tracking-wider uppercase block">
-                Silicon Valley Sports Tech & Event Management Engine
+                Sports Tech & Event Management Engine
               </span>
             </div>
           </Link>
@@ -39,6 +39,9 @@ export default function HomePage() {
             </Link>
             <Link href="/control-room/broadcast" className="hover:text-black dark:hover:text-white transition-colors">
               Neural PA Engine
+            </Link>
+            <Link href="/fan/match-hub" className="hover:text-black dark:hover:text-white transition-colors">
+              AR Match Hub
             </Link>
           </nav>
 
@@ -64,7 +67,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-8 pt-12 sm:pt-20 pb-16 text-center relative z-10">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-cyan-950/40 text-black dark:text-cyan-400 border border-slate-300 dark:border-cyan-500/30 text-xs font-black uppercase tracking-widest mb-6 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-ping" />
-          Official GenAI & IoT Command Engine · Dallas Stadium Operations
+          Official GenAI & IoT Command Engine · FIFA World Cup 2026™
         </div>
 
         <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-[-0.04em] leading-[1.05] max-w-5xl mx-auto text-black dark:bg-gradient-to-r dark:from-white dark:via-slate-100 dark:to-cyan-400 dark:bg-clip-text dark:text-transparent">
@@ -72,7 +75,7 @@ export default function HomePage() {
         </h1>
 
         <p className="text-muted-foreground text-base sm:text-xl font-medium max-w-3xl mx-auto mt-6 leading-relaxed">
-          Engineered by premier Silicon Valley CTOs, COOs, and sports event management leaders. PULSE unites autonomous 3D digital twins, Gemini 2.5 neural intelligence, and multilingual acoustic PA dispatch into one unbreakable enterprise platform.
+          PULSE unites autonomous 3D digital twins, Gemini 2.5 neural intelligence, and multilingual acoustic PA dispatch into one unbreakable enterprise platform.
         </p>
 
         {/* Live Status Pill Bar */}
@@ -173,7 +176,7 @@ export default function HomePage() {
                 Next-Gen Fan Experience & AR Hub
               </h2>
               <p className="text-muted-foreground text-sm font-medium mt-3 leading-relaxed">
-                Transforming the live event journey for 80,000+ attendees with indoor 3D concourse wayfinding, AI multilingual assistant, emergency safety triage, and real-time incident reporting.
+                Transforming the live event journey for 80,000+ World Cup attendees with indoor 3D concourse wayfinding, Hawk-Eye AR optical tracking stats, acoustic match replay commentary, and express in-seat delivery.
               </p>
 
               <div className="mt-6 grid grid-cols-2 gap-3 pt-4 border-t border-border/60">
@@ -187,11 +190,11 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-2 text-xs font-extrabold text-foreground">
                   <span className="material-symbols-outlined text-accent text-base">check_circle</span>
-                  <span>Gemini AI Copilot</span>
+                  <span>Hawk-Eye AR Mesh</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-extrabold text-foreground">
                   <span className="material-symbols-outlined text-accent text-base">check_circle</span>
-                  <span>SOS Emergency Triage</span>
+                  <span>In-Seat Express Concessions</span>
                 </div>
               </div>
             </div>
@@ -205,10 +208,10 @@ export default function HomePage() {
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
               </Link>
               <Link
-                href="/fan/map"
+                href="/fan/match-hub"
                 className="px-5 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-black text-xs uppercase tracking-wider text-center border border-slate-300 dark:border-slate-700 transition-all shadow-sm"
               >
-                3D Concourse Map
+                AR Audio Replay
               </Link>
             </div>
           </div>
@@ -250,14 +253,14 @@ export default function HomePage() {
               icon: "view_in_ar",
               color: "text-violet-500",
               bg: "bg-violet-500/10 border-violet-500/20",
-              desc: "Live spatial graph modeling turnstile rates, concourse walk times, and isometric heatmap layering for flagship event venues and mega-stadiums.",
+              desc: "Live spatial graph modeling turnstile rates, concourse walk times, and isometric heatmap layering for Estadio Azteca and MetLife Stadium.",
             },
             {
               title: "Enterprise SSO & Role Security",
               icon: "admin_panel_settings",
               color: "text-green-500",
               bg: "bg-green-500/10 border-green-500/20",
-              desc: "Military-grade clearance segregation for CTOs, COOs, Security Chiefs, and Event Operations Chiefs with one-click demo verification.",
+              desc: "Military-grade clearance segregation for CTOs, COOs, Security Chiefs, and FIFA Commissioners with one-click demo verification.",
             },
           ].map((card, i) => (
             <div key={i} className="bg-card/80 border border-border rounded-2xl p-6 fan-shadow flex flex-col justify-between">
@@ -288,7 +291,7 @@ export default function HomePage() {
               </span>
             </div>
             <p className="text-xs text-muted-foreground font-medium">
-              © 2026 PULSE Sports Tech & Event Management Engine · Engineered for Next-Gen Stadium Operations.
+              © 2026 PULSE Sports Tech & Event Management Engine · Engineered in Silicon Valley for FIFA World Cup 2026™.
             </p>
           </div>
 
